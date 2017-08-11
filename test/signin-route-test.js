@@ -17,14 +17,13 @@ const exampleUser = {
 };
 
 describe('Auth Routes', function() {
+  afterEach(done => {
+    User.remove({})
+      .then(() => done())
+      .catch(done);
+  });
   describe('POST: /api/signup', function() {
     describe('with a valid body', function() {
-      after(done => {
-        User.remove({})
-          .then(() => done())
-          .catch(done);
-      });
-
       it('should return a token', done => {
         request.post(`${url}/api/signup`)
           .send(exampleUser)
@@ -49,13 +48,6 @@ describe('Auth Routes', function() {
             done();
           });
       });
-
-      after(done => {
-        User.remove({})
-          .then(() => done())
-          .catch(done);
-      });
-
       it('should return a token', done => {
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '1234')
