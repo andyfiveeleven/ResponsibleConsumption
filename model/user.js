@@ -16,10 +16,13 @@ const userSchema = Schema({
   weight:{type: Number, required:true},
   food: {type: Number, required:true},
   experience: {type: Number, required:true},
-  dose: {type: Number, required: true},
+  dose: {type: Number, default: 1},
   findHash: { type: String, unique: true }
 });
 
+userSchema.methods.dose = function(){
+  return Math.floor((this.weight + this.exp*10 + this.lastMeal*3)/14);
+};
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
