@@ -1,7 +1,7 @@
 'use strict';
 
 const createError = require('http-errors');
-const debug = require('debug')('cfgram:basic-auth-middleware');
+const debug = require('debug')('credibleEdibles:basic-auth-middleware');
 
 module.exports = function(req, res, next) {
   debug('basic auth');

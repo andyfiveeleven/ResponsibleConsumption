@@ -3,7 +3,7 @@
 const expect = require('chai').expect;
 const request = require('superagent');
 const mongoose = require('mongoose');
-const Promise = require('bluebird');
+// const Promise = require('bluebird');
 const User = require('../model/user.js');
 
 require('../server.js');
@@ -14,7 +14,7 @@ const exampleUser = {
   username: 'exampleuser',
   password: '1234',
   email: 'exampleuser@test.com'
-}
+};
 
 describe('Auth Routes', function() {
   describe('POST: /api/signup', function() {
