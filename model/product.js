@@ -6,7 +6,8 @@ const debug = require('debug')('credibleEdibles:product');
 
 const productSchema = Schema({
   productname: {type: String, required: true},
-  dose: {type: String, required: true},
+  dose: {type: Number, required: true},
+  strength: {type: Number, required: true},
   userhistory: {type: Array, required: true}
 });
 
