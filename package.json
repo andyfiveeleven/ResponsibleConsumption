@@ -4,7 +4,7 @@
   "description": "desc",
   "main": "server.js",
   "scripts": {
-    "test": "DEBUG='credibleEdibles*' chai",
+    "test": "DEBUG='credibleEdibles*' mocha",
     "start": "DEBUG='credibleEdibles*' node server.js"
   },
   "repository": {
