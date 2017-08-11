@@ -1,14 +1,13 @@
 'use strict';
 
-const crypto = require('crypto');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const createError = require('http-errors');
-const Promise = require('bluebird');
-const debug = require('debug')('credibleEdibles:user');
+const jsonParser = require('body-parser').json();
+const debug = require('debug')('userex:auth-router');
+const Router = require('express').Router;
+const basicAuth = require('../lib/basic-auth-middleware.js');
+const User = require('../model/user.js');
 
 
+const authRouter = module.exports = Router();
 authRouter.post('/api/signup', jsonParser, function(req, res, next) {
   debug('POST: /api/signup');
 
