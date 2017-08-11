@@ -35,7 +35,7 @@
  * making a server.js file
  * creating .gitignore .eslintrc .eslintignore files
  * npm init
- * npm i -D to add the DevDependencies of chai, mocha, and superagent
+ * npm i -D to add DevDependencies of chai, mocha, and superagent
  * npm i -S to add Dependencies of .....
  * creating a /test directory with basic user model testing
  * creating a /model directory and user.js file containing a user schema
