@@ -10,38 +10,47 @@ exports.load = function(done) {
 
   request.get('https://www.cannabisreports.com/api/v1.0/edibles')
   .set('X-API-Key', 'CANNABIS_REPORTS_API_KEY')
-  .then(res => {
-    console.log(res.body.meta.pagination.links.next);
-    console.log(res.body.data[0].ucpc);
+  .then( res => {
+    // console.log(res.body.meta.pagination.links.next);
+    console.log(res.body.data);
 
     return res.body;
   },done)
   .then( edible => {
-    // for(let i = 0; i < res.body.data.length; i++){
-    let edibleName = {
-      name: edible.data[0].name,
-      cpc: edible.data[0].ucpc,
-      link: edible.data[0].link,
-      qr: edible.data[0].qr,
-      barcode: edible.data[0].barcode,
-      url: edible.data[0].url,
-      image: edible.data[0].image,
-      producer: edible.data[0].producer,
-      type: edible.data[0].type,
-      strain: edible.data[0].strain,
-      labTest: edible.data[0].labtest,
-      thc: edible.data[0].thc,
-      cbd: edible.data[0].cbd,
-      cannabis: edible.data[0].cannabis,
-      hashOil: edible.data[0].hashOil,
-      // reviews: edible.data[0].reviews
-    };
-    return edibleName;
+    let edibles = [];
+    for(let i in edible.data){
+      let edibleName = [{
+        name: edible.data[i].name,
+        ucpc: edible.data[i].ucpc,
+        link: edible.data[i].link,
+        qr: edible.data[i].qr,
+        barcode: edible.data[i].barcode,
+        url: edible.data[i].url,
+        image: edible.data[i].image,
+        producer: edible.data[i].producer,
+        type: edible.data[i].type,
+        strain: edible.data[i].strain,
+        labTest: edible.data[i].labtest,
+        thc: edible.data[i].thc,
+        cbd: edible.data[i].cbd,
+        cannabis: edible.data[i].cannabis,
+        hashOil: edible.data[i].hashOil,
+        reviews: edible.data[i].reviews
+      }];
+      edibles.push(edibleName);
+      Promise.all(edibles).then((edibles) => {
+        console.log(edibles);
+      });
+    }
+    return edibles;
   })
   .then((edible)=>{
-    request.post(`http://localhost:${process.env.PORT}/api/edible`)
-    .send(edible)
-    .end();
+    for(let i in edible){
+      console.log('%%%%%%%%%%%%%%%%%%%%',edible[i][0]);
+      request.post(`http://localhost:${process.env.PORT}/api/edible`)
+      .send(edible[i][0])
+      .end();
+    }
   });
 
   // .send({ucpc: edibles.data[0].ucpc})
