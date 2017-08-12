@@ -11,8 +11,8 @@ exports.load = function(done) {
   request.get('https://www.cannabisreports.com/api/v1.0/edibles')
   .set('X-API-Key', 'CANNABIS_REPORTS_API_KEY')
   .then(res => {
-    // console.log(res.body.meta.pagination.links.next);
-    // console.log(res.body.data[0].ucpc);
+    console.log(res.body.meta.pagination.links.next);
+    console.log(res.body.data[0].ucpc);
 
     return res.body;
   },done)

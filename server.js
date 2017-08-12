@@ -20,24 +20,6 @@ mongoose.connect(process.env.MONGODB_URI);
 app.use(edibleRouter);
 load.load();
 app.use(errors);
-// cannabisReports.Edible
-// .all()
-// .then(data => {
-//   console.log(data);
-// })
-// .catch(err => console.log(err));
-// let name = 'Kanha';
-
-// function migrateFromApi(num){
-
-
-// }
-// for(let i = 0; i<res.body.data.length; i++){
-//   if (res.body.data[i].name.includes(name)) {
-//
-//     console.log('BY NAME$&$&$&$&$&$&$&$&$&$&$&$&$&$&$$&', res.body.data[i]);
-//   }
-// }
 
 app.listen(PORT, () => {
   debug(`server on ${PORT}`);

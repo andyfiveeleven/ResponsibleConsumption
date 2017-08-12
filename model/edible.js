@@ -23,7 +23,10 @@ const edibleSchema = Schema ({
   cbd: {type: String},
   cannabis: {type: Boolean},
   hashOil: {type: Boolean},
-  reviews: {type: String},
+  reviews: {
+    count: {type: Number},
+    link: {type: String}
+  },
   createdAt: {type: Date, Default: new Date() }
 });
 
