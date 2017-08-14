@@ -13,6 +13,9 @@ const url = `http://localhost:${process.env.PORT}`;
 const exampleUser = {
   username: 'exampleuser',
   password: '1234',
+  weight: 2,
+  lastMeal: 5,
+  experience: 3,
   email: 'exampleuser@test.com'
 };
 
@@ -77,7 +80,7 @@ describe('Auth Routes', function() {
             done();
           });
       });
-      it('should return a token', done => {
+      it('should return a 401', done => {
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '134')//bad password
           .end((err, res) => {
