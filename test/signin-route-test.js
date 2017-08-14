@@ -39,6 +39,7 @@ describe('Auth Routes', function() {
       });
     });
   });
+
   describe('GET: /api/signin', function() {
     describe('with a valid body', function() {
       before(done => {
@@ -54,17 +55,24 @@ describe('Auth Routes', function() {
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '1234')
           .end((err, res) => {
-            console.log('a different res body', res.body);
             expect(res.status).to.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 500 error', done =>{ //we deleted it!
+        request.get(`${url}/api/signin`)
+          .auth('exampleuser', '1234')
+          .end((err, res) => {
+            expect(res.status).to.equal(500);
             done();
           });
       });
     });
 
-    describe('with a valid dosage', function() {
+    describe('with an invalid password', function(){
       before(done => {
         let user = new User(exampleUser);
-        user.generateDose();
         user.generatePasswordHash(exampleUser.password)
           .then(user => user.save())
           .then(user => {
@@ -72,13 +80,12 @@ describe('Auth Routes', function() {
             done();
           });
       });
-      it('Is it generateDose', function() {
+      it('should return a 401', done => {
         request.get(`${url}/api/signin`)
-          .auth('exampleuser', '1234')
+          .auth('exampleuser', '134')//bad password
           .end((err, res) => {
-            console.log('res body', res.body);
-            expect(res.body.dosage).to.be.a('number');
-            expect(res.body.dosage).to.equal(3);
+            expect(res.status).to.equal(401);
+            done();
           });
       });
     });
