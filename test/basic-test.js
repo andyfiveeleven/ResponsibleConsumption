@@ -4,12 +4,21 @@ const expect = require('chai').expect;
 const request = require('superagent');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-const User = require('../model/user.js');
+const basic = require('../lib/basic-auth-middleware.js');
 
 require('../server.js');
 
 const url = `http://localhost:${process.env.PORT}`;
 
-const test = 0;
 
-expect(test).to.equal(0);
+describe('Basic-Teest', function() {
+  describe('is it valid:', () => {
+    // it('working YES', () => {
+    //   basic();
+    // });
+    // it('working NO', () => {
+
+    // });
+
+  });
+});

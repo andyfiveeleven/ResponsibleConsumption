@@ -61,7 +61,7 @@ describe('Auth Routes', function() {
       });
     });
 
-    describe('with a valid dosage', function(){
+    describe('with a valid dosage', function() {
       before(done => {
         let user = new User(exampleUser);
         user.generateDose();
@@ -72,14 +72,14 @@ describe('Auth Routes', function() {
             done();
           });
       });
-      it('Is it generateDose', function(){
+      it('Is it generateDose', function() {
         request.get(`${url}/api/signin`)
-        .auth('exampleuser', '1234')
-        .end((err, res) => {
-          console.log('res body', res.body);
-          expect(res.body.dosage).to.be.a('number');
-          expect(res.body.dosage).to.equal(3);
-        });
+          .auth('exampleuser', '1234')
+          .end((err, res) => {
+            console.log('res body', res.body);
+            expect(res.body.dosage).to.be.a('number');
+            expect(res.body.dosage).to.equal(3);
+          });
       });
     });
   });
