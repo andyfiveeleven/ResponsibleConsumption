@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 
 const edibleRouter = require('./route/edible-route.js');
 const errors = require('./lib/error-middleware.js');
-const load = require('./load.js');
+const load = require('./lib/load.js');
 
 dotenv.load();
 
