@@ -59,6 +59,35 @@ describe('Auth Routes', function() {
             done();
           });
       });
+
+      it('should return a 500 error', done =>{ //we deleted it!
+        request.get(`${url}/api/signin`)
+          .auth('exampleuser', '1234')
+          .end((err, res) => {
+            expect(res.status).to.equal(500);
+            done();
+          });
+      });
+    });
+
+    describe('with an invalid password', function(){
+      before(done => {
+        let user = new User(exampleUser);
+        user.generatePasswordHash(exampleUser.password)
+          .then(user => user.save())
+          .then(user => {
+            this.tempUser = user;
+            done();
+          });
+      });
+      it('should return a 401', done => {
+        request.get(`${url}/api/signin`)
+          .auth('exampleuser', '134')//bad password
+          .end((err, res) => {
+            expect(res.status).to.equal(401);
+            done();
+          });
+      });
     });
 
     describe('with a valid dosage', function(){
