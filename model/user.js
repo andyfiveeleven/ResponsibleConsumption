@@ -16,16 +16,21 @@ const userSchema = Schema({
   weight: { type: Number, required: true},
   lastMeal: {type: Number, required: true},
   experience: {type: Number, required: true},
-  dosage: {type: Number, required: true},
+  dosage: {type: Number, default: 0},
   findHash: { type: String, unique: true }
 });
-
-userSchema.methods.generateDosage = function(){
+//
+userSchema.methods.generateDose = function(){
   debug('generate dosage');
-  this.dosage = Math.floor((this.weight + this.experience*10 + this.lastMeal*3)/14);
-  this.save()
-  .then(() => resolve(this.dosage))
-  .catch((err) => reject(err));
+
+  return new Promise((resolve,reject) => {
+    this.dosage = Math.floor((this.weight + this.experience*10 + this.lastMeal*3)/14);
+    console.log('a dosage', this.dosage);
+    this.save()
+    .then(() => resolve(this.dosage))
+    .catch((err) => reject(err));
+  });
+};
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
