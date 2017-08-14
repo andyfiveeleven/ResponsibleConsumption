@@ -13,6 +13,9 @@ const url = `http://localhost:${process.env.PORT}`;
 const exampleUser = {
   username: 'exampleuser',
   password: '1234',
+  weight: 2,
+  lastMeal: 5,
+  experience: 3,
   email: 'exampleuser@test.com'
 };
 
@@ -36,7 +39,6 @@ describe('Auth Routes', function() {
       });
     });
   });
-
   describe('GET: /api/signin', function() {
     describe('with a valid body', function() {
       before(done => {
@@ -52,8 +54,31 @@ describe('Auth Routes', function() {
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '1234')
           .end((err, res) => {
+            console.log('a different res body', res.body);
             expect(res.status).to.equal(200);
             done();
+          });
+      });
+    });
+
+    describe('with a valid dosage', function() {
+      before(done => {
+        let user = new User(exampleUser);
+        user.generateDose();
+        user.generatePasswordHash(exampleUser.password)
+          .then(user => user.save())
+          .then(user => {
+            this.tempUser = user;
+            done();
+          });
+      });
+      it('Is it generateDose', function() {
+        request.get(`${url}/api/signin`)
+          .auth('exampleuser', '1234')
+          .end((err, res) => {
+            console.log('res body', res.body);
+            expect(res.body.dosage).to.be.a('number');
+            expect(res.body.dosage).to.equal(3);
           });
       });
     });
