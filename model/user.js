@@ -13,9 +13,19 @@ const userSchema = Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  weight: { type: Number, required: true},
+  lastMeal: {type: Number, required: true},
+  experience: {type: Number, required: true},
+  dosage: {type: Number, required: true},
   findHash: { type: String, unique: true }
 });
 
+userSchema.methods.generateDosage = function(){
+  debug('generate dosage');
+  this.dosage = Math.floor((this.weight + this.experience*10 + this.lastMeal*3)/14);
+  this.save()
+  .then(() => resolve(this.dosage))
+  .catch((err) => reject(err));
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
