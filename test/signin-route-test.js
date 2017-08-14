@@ -31,6 +31,7 @@ describe('Auth Routes', function() {
         request.post(`${url}/api/signup`)
           .send(exampleUser)
           .end((err, res) => {
+            console.log(res.text);
             if (err) return done(err);
             expect(res.status).to.equal(200);
             expect(res.text).to.be.a('string');
