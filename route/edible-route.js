@@ -12,6 +12,7 @@ const edibleRouter = module.exports = new Router();
 
 edibleRouter.post('/api/edible', jsonParser, function(req, res, next){
   debug('POST: /api/edible');
+  console.log('THIS IS IN THE POST ROUTE', req.body);
   new Edible(req.body).save()
   .then( edible => res.json(edible))
   .catch(next);

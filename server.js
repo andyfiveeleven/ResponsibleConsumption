@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGODB_URI);
 
 app.use(edibleRouter);
-load.load();
+load.load(1);
 app.use(errors);
 
 app.listen(PORT, () => {
