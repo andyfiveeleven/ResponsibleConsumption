@@ -30,7 +30,7 @@ app.use(signup);
 app.use(signin);
 app.use(expReview);
 app.use(edibleRouter);
-load.load(1);
+load.load(54);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
