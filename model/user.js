@@ -13,9 +13,12 @@ const userSchema = Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  weight: { type: Number, required: true},
+  lastMeal: {type: Number, required: true},
+  experience: {type: Number, required: true},
+  dosage: {type: Number, default: 0},
   findHash: { type: String, unique: true }
 });
-
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
