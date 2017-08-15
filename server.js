@@ -1,10 +1,6 @@
 'use strict';
 
 const express = require('express');
-
-
-
-
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -14,7 +10,7 @@ const debug = require('debug')('credibleEdibles:server');
 const errors = require('./lib/error-middleware.js');
 const signup = require('./route/signup-route');
 const signin = require('./route/signin-route');
-const profile = require('./route/profile-route.js')
+const profile = require('./route/profile-route.js');
 const edibleRouter = require('./route/edible-route.js');
 const load = require('./lib/load.js');
 
@@ -35,4 +31,3 @@ app.use(edibleRouter);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
-
