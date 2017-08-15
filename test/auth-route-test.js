@@ -55,6 +55,8 @@ describe('Auth Routes', () => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.text).to.be.a('string');
+          expect(res.body.username).to.equal(exampleUser.username);
+          expect(res.body.email).to.equal(exampleUser.email);
           done();
         });
       });
@@ -95,7 +97,11 @@ describe('Auth Routes', () => {
         .auth(exampleUser.username, exampleUser.password)
         .end((err, res) => {
           if(err) return done(err);
+          console.log(res.body);
           expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body.username).to.equal(exampleUser.username);
+          expect(res.body.email).to.equal(exampleUser.email);
           done();
         });
       });
