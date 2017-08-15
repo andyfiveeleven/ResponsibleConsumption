@@ -1,10 +1,6 @@
 'use strict';
 
 const express = require('express');
-
-
-
-
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -17,6 +13,7 @@ const signin = require('./route/signin-route');
 const profile = require('./route/profile-route.js')
 const edibleRouter = require('./route/edible-route.js');
 const load = require('./lib/load.js');
+const expReview = require('./route/exp-review-route.js');
 
 dotenv.load();
 
@@ -32,7 +29,7 @@ app.use(profile);
 app.use(signup);
 app.use(signin);
 app.use(edibleRouter);
+app.use(expReview);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
-

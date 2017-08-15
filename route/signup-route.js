@@ -23,10 +23,3 @@ authRouter.post('/api/signup', jsonParser, function(req, res, next) {
     .then(token => res.send(token))
     .catch(next);
 });
-
-// authRouter.put('/api/signup/:id', bearerAuth, function(req, res, next){
-//   debug('get: /api/signup/:id');
-//
-//   User.findById(req.params.id)
-//   .then();
-// })
