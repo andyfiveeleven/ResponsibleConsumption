@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const debug = require('debug')('credibleEdibles:server');
 
+mongoose.Promise = require('bluebird');
+
 const errors = require('./lib/error-middleware.js');
 const signup = require('./route/signup-route');
 const signin = require('./route/signin-route');
