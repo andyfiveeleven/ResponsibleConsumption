@@ -40,6 +40,7 @@ describe('Auth Routes', function() {
       });
     });
   });
+
   describe('GET: /api/signin', function() {
     describe('with a valid body', function() {
       before(done => {
@@ -55,7 +56,6 @@ describe('Auth Routes', function() {
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '1234')
           .end((err, res) => {
-            console.log('a different res body', res.body);
             expect(res.status).to.equal(200);
             done();
           });
