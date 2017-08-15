@@ -23,7 +23,6 @@ const exampleProfile = {
   lastname: 'user',
   productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
   weight: 2,
-  lastMeal: 5,
   experience: 3
 };
 
@@ -60,11 +59,10 @@ describe('profile routes', function () {
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        console.log('dosage', res.body.dosage);
         if (err) return done(err);
         expect(res.body.name).to.equal(exampleProfile.name);
-        expect(res.body.dosage).to.be.a('number');
-        expect(res.body.dosage).to.equal(3);
+        expect(res.body.weight).to.be.a('number');
+        expect(res.body.weight).to.equal(2);
         done();
       });
     });

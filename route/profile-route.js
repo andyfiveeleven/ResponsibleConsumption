@@ -14,7 +14,6 @@ profileRouter.post('/api/profile', bearerAuth, jsonParser, function(req, res, ne
 
   req.body.userID = req.user._id;
   new Profile(req.body).save()
-  .then( profile => profile.generateDose())
   .then( profile => res.json(profile))
   .catch(next);
 });
