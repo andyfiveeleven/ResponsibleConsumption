@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 
-const expect = require('chai').expect
+const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
-const mongoose = require('mongoose');
 
 const User = require('../model/user.js');
-const Profile = require('../model/profile.js');
-
-require('../server.js');
+// const Profile = require('../model/profile.js');
+const Edible = require('../model/edible.js');
 
 const url = `http://localhost:${process.env.PORT}`;
+
+require('../server.js');
 
 const exampleUser = {
   username: 'exampleuser',
@@ -18,30 +18,58 @@ const exampleUser = {
   email: 'exampleuser@test.com'
 };
 
-const exampleProfile = {
-  firstname: 'example',
-  lastname: 'user',
-  productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
-  weight: 2,
-  lastMeal: 5,
-  experience: 3
+// const exampleProfile = {
+//   firstname: 'example',
+//   lastname: 'user',
+//   productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
+//   weight: 2,
+//   lastMeal: 5,
+//   experience: 3
+// };
+
+const testEdible = {
+  name: 'testName',
+  ucpc: '0000',
+  link: 'www.alink.com',
+  qr: 'www.qr.com',
+  barcode: 'www.barcode.com',
+  url: 'www.url.com',
+  image: 'www.image.com',
+  producer: {
+    name: 'producerName',
+    ucpc: '0000',
+    link: 'www.prolink.com'
+  },
+  type: 'testType',
+  strain: [],
+  labTest: true,
+  thc: '100mg',
+  cbd: '3mg',
+  cannabis: true,
+  hashOil: false,
+  reviews: {
+    count: 0,
+    link: 'www.somelink.com'
+  },
 };
 
-describe('profile routes', function () {
+describe('edible routes', function () {
   afterEach( done => {
     Promise.all([
       User.remove({}),
-      Profile.remove({})
+      Edible.remove({ name: 'testName'})
     ])
     .then( () => done())
     .catch(done);
   });
 
-  describe('POST: /api/profile', ()=> {
+  describe('POST: /api/edible', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
-      .then( user => user.save())
+      .then( user => {
+        return user.save();
+      })
       .then( user => {
         this.tempUser = user;
         return user.generateToken();
@@ -53,18 +81,35 @@ describe('profile routes', function () {
       .catch(done);
     });
 
-    it('should return a profile', done => {
-      request.post(`${url}/api/profile`)
-      .send(exampleProfile)
+    it('should return an edible', done => {
+      request.post(`${url}/api/edible`)
+      .send(testEdible)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        console.log('dosage', res.body.dosage);
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', res.body.strain);
         if (err) return done(err);
-        expect(res.body.name).to.equal(exampleProfile.name);
-        expect(res.body.dosage).to.be.a('number');
-        expect(res.body.dosage).to.equal(3);
+        expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal('testName');
+        expect(res.body.ucpc).to.equal('0000');
+        expect(res.body.link).to.equal('www.alink.com');
+        expect(res.body.qr).to.equal('www.qr.com');
+        expect(res.body.barcode).to.equal('www.barcode.com');
+        expect(res.body.url).to.equal('www.url.com');
+        expect(res.body.image).to.equal('www.image.com');
+        expect(res.body.producer.name).to.equal('producerName');
+        expect(res.body.producer.ucpc).to.equal('0000');
+        expect(res.body.producer.link).to.equal('www.prolink.com');
+        expect(res.body.type).to.equal('testType');
+        expect(res.body.strain).to.be.an('array');
+        expect(res.body.labTest).to.equal(true);
+        expect(res.body.thc).to.equal('100mg');
+        expect(res.body.cbd).to.equal('3mg');
+        expect(res.body.cannabis).to.equal(true);
+        expect(res.body.hashOil).to.equal(false);
+        expect(res.body.reviews.count).to.equal(0);
+        expect(res.body.reviews.link).to.equal('www.somelink.com');
         done();
       });
     });
@@ -87,7 +132,7 @@ describe('profile routes', function () {
       .catch(done);
     });
     it('should return 400', done => {
-      request.post(`${url}/api/profile`)
+      request.post(`${url}/api/edible`)
       .send()
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -116,7 +161,7 @@ describe('profile routes', function () {
       .catch(done);
     });
     it('should return 401', done => {
-      request.post(`${url}/api/profile`)
+      request.post(`${url}/api/edible`)
       .send()
       .end((err,res) => {
         expect(res.status).to.equal(401);
@@ -142,7 +187,7 @@ describe('profile routes', function () {
       .catch(done);
     });
     it('should return 404', done => {
-      request.post(`${url}/api/profilenew`)
+      request.post(`${url}/api/ediblecookie`)
       .send()
       .end((err,res) => {
         expect(res.status).to.equal(404);
