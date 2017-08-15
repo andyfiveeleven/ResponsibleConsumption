@@ -61,11 +61,11 @@ describe('Auth Routes', function() {
           });
       });
 
-      it('should return a 500 error', done =>{ //we deleted it!
+      it('should return a 401 error', done =>{ //we deleted it!
         request.get(`${url}/api/signin`)
           .auth('exampleuser', '1234')
           .end((err, res) => {
-            expect(res.status).to.equal(500);
+            expect(res.status).to.equal(401);
             done();
           });
       });
