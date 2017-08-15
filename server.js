@@ -10,7 +10,8 @@ const debug = require('debug')('credibleEdibles:server');
 const errors = require('./lib/error-middleware.js');
 const signup = require('./route/signup-route');
 const signin = require('./route/signin-route');
-const profile = require('./route/profile-route.js')
+const profile = require('./route/profile-route.js');
+const expReview = require('./route/exp-review-route.js');
 
 dotenv.load();
 
@@ -25,6 +26,7 @@ app.use(morgan('dev'));
 app.use(profile);
 app.use(signup);
 app.use(signin);
+app.use(expReview);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
