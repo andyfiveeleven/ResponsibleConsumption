@@ -1,13 +1,14 @@
 'use strict';
 
 const jsonParser = require('body-parser').json();
-const debug = require('debug')('userex:auth-router');
 const Router = require('express').Router;
+const debug = require('debug')('credibleEdibles:auth-router');
+
 const basicAuth = require('../lib/basic-auth-middleware.js');
 const User = require('../model/user.js');
 
-
 const authRouter = module.exports = Router();
+
 authRouter.post('/api/signup', jsonParser, function(req, res, next) {
   debug('POST: /api/signup');
 
