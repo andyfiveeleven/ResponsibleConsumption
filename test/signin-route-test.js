@@ -31,6 +31,7 @@ describe('Auth Routes', function() {
         request.post(`${url}/api/signup`)
           .send(exampleUser)
           .end((err, res) => {
+            console.log(res.text);
             if (err) return done(err);
             expect(res.status).to.equal(200);
             expect(res.text).to.be.a('string');
@@ -87,28 +88,6 @@ describe('Auth Routes', function() {
             expect(res.status).to.equal(401);
             done();
           });
-      });
-    });
-
-    describe('with a valid dosage', function(){
-      before(done => {
-        let user = new User(exampleUser);
-        user.generateDose();
-        user.generatePasswordHash(exampleUser.password)
-          .then(user => user.save())
-          .then(user => {
-            this.tempUser = user;
-            done();
-          });
-      });
-      it('Is it generateDose', function(){
-        request.get(`${url}/api/signin`)
-        .auth('exampleuser', '1234')
-        .end((err, res) => {
-          console.log('res body', res.body);
-          expect(res.body.dosage).to.be.a('number');
-          expect(res.body.dosage).to.equal(3);
-        });
       });
     });
   });

@@ -1,5 +1,10 @@
 # Created by https://www.gitignore.io/api/osx,vim,node,macos,windows
 
+
+###John Scarrows files###
+JSTests/
+
+
 ### macOS ###
 *.DS_Store
 .AppleDouble

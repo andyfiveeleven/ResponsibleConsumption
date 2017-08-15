@@ -10,25 +10,25 @@ const errMiddleware = require('../lib/error-middleware.js');
 const url = `http://localhost:${process.env.PORT}`;
 require('../server.js');
 
-describe('Error Middleware', () => {
-  describe('with existing error status', () => {
-    it('', (done) => {
+// describe('Error Middleware', () => {
+//   describe('with existing error status', () => {
+//     it('', (done) => {
 
-    });
-  });
+//     });
+//   });
 
-  describe('with a name of ValidationError', () => {
-    it('', () => {
+//   describe('with a name of ValidationError', () => {
+//     it('', () => {
 
-    });
-  });
+//     });
+//   });
 
-  describe('with no error status', () => {
-    it('', () => {
-      // request.get(`${url}/api/not/a/route`, (err, res) => {
-      //   expect(err.status).to.equal();
-      //   done();
-      // })
-    });
-  });
-});
+//   describe('with no error status', () => {
+//     it('', () => {
+//       // request.get(`${url}/api/not/a/route`, (err, res) => {
+//       //   expect(err.status).to.equal();
+//       //   done();
+//       // })
+//     });
+//   });
+// });

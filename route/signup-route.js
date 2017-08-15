@@ -6,6 +6,7 @@ const Router = require('express').Router;
 const basicAuth = require('../lib/basic-auth-middleware.js');
 const User = require('../model/user.js');
 
+const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const authRouter = module.exports = Router();
 authRouter.post('/api/signup', jsonParser, function(req, res, next) {
