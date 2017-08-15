@@ -11,13 +11,29 @@ const debug = require('debug')('credibleEdibles:product');
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-  username: {type: String, required: true, unique: true},
-  email: {type: String, required: true, unique: true},
-  password: {type: String, required: true},
-  findHash: {type: String, unique: true}
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  weight: { type: Number, required: true},
+  lastMeal: {type: Number, required: true},
+  experience: {type: Number, required: true},
+  dosage: {type: Number, default: 0},
+  findHash: { type: String, unique: true }
 });
+//
+userSchema.methods.generateDose = function(){
+  debug('generate dosage');
+  
+  return new Promise((resolve,reject) => {
+    this.dosage = Math.floor((this.weight + this.experience*10 + this.lastMeal*3)/14);
+    console.log('a dosage', this.dosage);
+    this.save()
+    .then(() => resolve(this.dosage))
+    .catch((err) => reject(err));
+  });
+};
 
-userSchema.methods.generatePasswordHash = function(password) {
+userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
 
   return new Promise((resolve, reject) => {

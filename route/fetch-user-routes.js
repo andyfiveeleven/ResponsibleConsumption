@@ -8,10 +8,6 @@ const User = require('../model/user.js');
 
 const fetchRouter = module.exports = Router();
 
-fetchRouter.get('/api/fatchusers', basicAuth, function(req, res, next) {
-  debug('GET: /api/fatchusers');
-  res.send(done => {
-
-    done;
-  });
+fetchRouter.get('/api/fatchuser', basicAuth, function(req, res, next) {
+  debug('GET: /api/fatchuser');
 });
