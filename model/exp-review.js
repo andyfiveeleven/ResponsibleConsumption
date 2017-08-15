@@ -20,9 +20,11 @@ expReviewSchema.methods.generateDose = function(){
   debug('generate dosage');
 //TODO: talk about this with Ta's
   return new Promise((resolve,reject) => {//??
-    let profile = Profile.findById(this.profileID);
-    this.dosage = Math.floor((profile.weight + profile.experience*10 + this.lastMeal*3)/14);
-    this.save()
+    Profile.findById(this.profileID)
+    .then( profile => {
+      this.dosage = Math.floor((profile.weight + profile.experience*10 + this.lastMeal*3)/14);
+      this.save();
+    })
     .then(() => resolve(this))
     .catch((err) => reject(err));
   });
