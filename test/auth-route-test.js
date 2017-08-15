@@ -17,24 +17,24 @@ const exampleUser = {
 describe('Auth Routes', () => {
   describe('invalid paths', () => {
     describe('POST: with invalid route', () => {
-      it('should return an error status of 404', (done) => {
+      it('should return status: 404, msg: Not Found', (done) => {
         request.post(`${url}/api/signup/not/a/path`)
         .send(exampleUser)
-        .end((err, res) => {
-          console.log(err.message);
+        .end((err) => {
           expect(err.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
           done();
         });
       });
     });
 
     describe('GET: with invalid route', () => {
-      it('should return an error status 404', (done) => {
+      it('should return status: 404, msg: Not Found', (done) => {
         request.get(`${url}/api/signin/not/a/path`)
         .auth(exampleUser.username, exampleUser.password)
-        .end((err, res) => {
-          console.log(res.text);
+        .end((err) => {
           expect(err.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
           done();
         });
       });
@@ -55,7 +55,6 @@ describe('Auth Routes', () => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.text).to.be.a('string');
-          console.log(res);
           done();
         });
       });
@@ -66,8 +65,8 @@ describe('Auth Routes', () => {
         request.post(`${url}/api/signup`)
         .send()
         .end((err, res) => {
-          console.log(res.text);
           expect(err.status).to.equal(400);
+          expect(res.message).to.equal('some');
           done();
         });
       });
@@ -97,7 +96,6 @@ describe('Auth Routes', () => {
         .auth(exampleUser.username, exampleUser.password)
         .end((err, res) => {
           if(err) return done(err);
-          console.log(res.body);
           expect(res.status).to.equal(200);
           done();
         });

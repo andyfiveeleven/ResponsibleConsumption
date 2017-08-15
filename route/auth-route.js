@@ -24,9 +24,9 @@ authRouter.post('/api/signup', jsonParser, function (req, res, next) {
   let user = new User(req.body);
 
   user.generatePasswordHash(password)
-  .then( user => user.save())
-  .then( user => user.generateToken())
-  .then( token => res.send(token))
+  .then((user) => user.save())
+  .then((user) => user.generateToken())
+  .then((token) => res.send(token))
   .catch(next);
 });
 
@@ -37,13 +37,11 @@ authRouter.get('/api/signin', basicAuth, function(req, res, next){
   if(!req.password) return next(createError(400, 'password required'));
 
   User.findOne({username: req.auth.username})
-  .then( user => {
-    if(!user) {
-      return Promise.reject(createError(401, 'invalid username'));
-    }
+  .then((user) => {
+    if(!user) return Promise.reject(createError(401, 'invalid username'));
     return user.comparePasswordHash(req.auth.password);
   })
-  .then( user => user.generateToken())
-  .then( token => res.send(token))
+  .then((user) => user.generateToken())
+  .then((token) => res.send(token))
   .catch(next);
 });
