@@ -3,14 +3,14 @@
 ##### This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
 
 ## **Documentation:**
-##### GET: localhost://api/something/person
-    * output
+##### GET: /api/signin
+    should fetch existing user
 
-##### GET: localhost://api/somethingelse/person
-    * output
+##### POST: /api/signup
+    should create new user obj
 
 ##### POST: something
-    * output
+    output
 
 
 ## **Development Plan:**
@@ -31,18 +31,21 @@
 
 #### **Thursday (Aug 10)**
 ###### planning, basic setup, research
- * talking and discussing the features of our app
- * making a server.js file
- * creating .gitignore .eslintrc .eslintignore files
- * npm init
- * npm i -D to add the DevDependencies of chai, mocha, and superagent
- * npm i -S to add Dependencies of .....
- * creating a /test directory with basic user model testing
- * creating a /model directory and user.js file containing a user schema
- * creating a /lib directory with bearer-auth-middleware.js and error-middleware.js
+  * talking and discussing the features of our app
+  * making a server.js file
+  * creating .gitignore .eslintrc .eslintignore files
+  * npm init
+  * npm i -D to add DevDependencies of chai, mocha, and superagent
+  * npm i -S to add Dependencies of .....
+  * creating a /test directory with basic user model testing
+  * creating a /model directory and user.js file containing a user schema
+  * creating a /lib directory with bearer-auth-middleware.js and error-middleware.js
 
 #### **Friday (Aug 11)**
-###### Stuff
+  * made /test and basic testing files
+  * set up travis and heroku
+  * created /route plus signin and signup routes
+  * fixed package.json to work with npm scripts
 
 #### **Weekend (Aug 12 - 13)**
 ##### Stuff

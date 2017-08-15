@@ -1,26 +1,38 @@
 'use strict';
 
 const express = require('express');
-const debug = require('debug')('medable:server');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-// const cannabisReports = require('cannabis-reports');
 
-const edibleRouter = require('./route/edible-route.js');
+
+
+
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cors = require('cors');
+const debug = require('debug')('credibleEdibles:server');
+
 const errors = require('./lib/error-middleware.js');
+const signup = require('./route/signup-route');
+const signin = require('./route/signin-route');
+const profile = require('./route/profile-route.js')
+const edibleRouter = require('./route/edible-route.js');
 const load = require('./lib/load.js');
 
 dotenv.load();
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
+app.use(cors());
+app.use(morgan('dev'));
+
+
+app.use(profile);
+app.use(signup);
+app.use(signin);
 app.use(edibleRouter);
-load.load(1);
 app.use(errors);
 
-app.listen(PORT, () => {
-  debug(`server on ${PORT}`);
-});
+app.listen(PORT, () => debug(`app listening on: ${PORT}`));
+
