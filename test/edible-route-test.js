@@ -169,4 +169,30 @@ describe('edible routes', function () {
       });
     });
   });
+  describe('POST with an improper route 404', () => {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => {
+        return user.save();
+      })
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+    it('should return 404', done => {
+      request.post(`${url}/api/ediblecookie`)
+      .send()
+      .end((err,res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
+  });
 });
