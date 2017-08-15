@@ -19,18 +19,6 @@ const userSchema = Schema({
   dosage: {type: Number, default: 0},
   findHash: { type: String, unique: true }
 });
-//
-userSchema.methods.generateDose = function(){
-  debug('generate dosage');
-
-  return new Promise((resolve,reject) => {
-    this.dosage = Math.floor((this.weight + this.experience*10 + this.lastMeal*3)/14);
-    console.log('a dosage', this.dosage);
-    this.save()
-    .then(() => resolve(this.dosage))
-    .catch((err) => reject(err));
-  });
-};
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
