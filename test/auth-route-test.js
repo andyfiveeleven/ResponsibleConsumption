@@ -66,7 +66,6 @@ describe('Auth Routes', () => {
         .send()
         .end((err, res) => {
           expect(err.status).to.equal(400);
-          expect(res.message).to.equal('some');
           done();
         });
       });
