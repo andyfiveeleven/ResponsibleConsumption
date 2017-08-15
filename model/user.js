@@ -19,7 +19,6 @@ const userSchema = Schema({
   dosage: {type: Number, default: 0},
   findHash: { type: String, unique: true }
 });
-//
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');
