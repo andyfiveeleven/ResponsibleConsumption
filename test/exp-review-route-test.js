@@ -78,6 +78,7 @@ describe('expReview Routes', function(){
       })
       .end((err, res) => {
         if (err) return done(err);
+        console.log(res.body);
         expect(res.body.lastMeal).to.equal(2);
         done();
       });
