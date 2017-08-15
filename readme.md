@@ -52,6 +52,8 @@
 
 #### **Monday (Aug 14)**
 ##### Stuff
+we finished monday! 
+
 
 #### **Tuesday (Aug 15)**
 ##### Stuff
