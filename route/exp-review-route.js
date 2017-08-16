@@ -6,7 +6,7 @@ const createError = require('http-errors');
 const debug = require('debug')('credibleEdibles:exp-review-router');
 
 const Profile = require('../model/profile.js');
-const ExpReview = require('../model/exp-review.js')
+const ExpReview = require('../model/exp-review.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const expReviewRouter = module.exports = Router();
