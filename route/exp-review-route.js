@@ -22,12 +22,30 @@ expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res
   .catch(next);
 });
 
-expReviewRouter.get('api/expReview/:id', bearerAuth, function(req, res, next) {
+expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/expReview/:id');
 
   ExpReview.findById(req.params.id)
   .then( expReview => {
     res.json(expReview);
   })
+  .catch(next);
+});
+
+expReviewRouter.put('/api/expReview/:id', bearerAuth, jsonParser, function(req, res, next) {
+  debug('PUT: /api/expReview/:id');
+
+  if(Object.keys(req.body).length === 0) {
+    ExpReview.findById(req.params.id)
+    .then(expReview =>{
+      res.status(400);
+      res.json(expReview);
+    })
+    .catch(next);
+    return;
+  }
+
+  ExpReview.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  .then( expReview => res.json(expReview))
   .catch(next);
 });
