@@ -14,10 +14,11 @@ const expReviewRouter = module.exports = Router();
 expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res, next) {
   debug('POST: /api/expReview');
 
-  req.body.profileID = req.profile._id;
   new ExpReview(req.body).save()
   .then( expReview => expReview.generateDose())
-  .then( expReview => res.json(expReview))
+  .then( expReview => {
+    res.json(expReview);
+  })
   .catch(next);
 });
 

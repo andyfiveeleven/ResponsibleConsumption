@@ -24,7 +24,7 @@ const exampleProfile = {
   lastname: 'user',
   productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
   weight: 2,
-  experience: 3
+  experience: 3,
 };
 
 const exampleExpReview = {
@@ -60,23 +60,27 @@ describe('expReview Routes', function(){
     });
 
     before( done => {
-      new Profile(exampleProfile)
-      .set({
-        Authorization: `Bearer ${this.tempToken}`
-      })
-      .then( profile => profile.save())
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
       .then( profile => {
         this.tempProfile = profile;
+        done();
       })
       .catch(done);
     });
 
     it('should return a expReview', done => {
+      exampleExpReview.profileID = this.tempProfile._id;
       request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
       .end((err, res) => {
         if (err) return done(err);
-        console.log('res body', res.body);
+        console.log(res.body);
+        expect(res.body.lastMeal).to.equal(2);
+        done();
       });
     });
   });
