@@ -14,7 +14,7 @@ const expReviewSchema = Schema({
   date: {type: Date, required: true, default: Date.now },
   dayDescription: {type: String, default: ''},
   reaction: {type: Number, default: 3}, //1-5
-  edibleThc: {type: String},
+  edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
 });
 
@@ -24,7 +24,11 @@ expReviewSchema.methods.findEdibleThc = function(){
   return new Promise((resolve, reject) =>{
     Edible.findOne({'name': this.edibleName})
     .then(thc => {
-      this.edibleThc = thc.thc;
+      let thcStr = thc.thc;
+      thcStr = thcStr.slice(0, thcStr.length - 2);
+      let thcInt = parseInt(thcStr)
+      console.log(thcStr);
+      this.edibleThc = thcInt;
       this.save();
     })
     .then(() => resolve(this))

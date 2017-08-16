@@ -31,7 +31,6 @@ const exampleProfile = {
 const exampleExpReview = {
   edibleName: 'testName',
   lastMeal: 2,
-  edible: 'testName'
 };
 
 const testEdible = {
@@ -120,7 +119,7 @@ describe('expReview Routes', function(){
         if (err) return done(err);
         console.log(res.body);
         expect(res.body.lastMeal).to.equal(2);
-        expect(res.body.edibleThc).to.equal('100mg');
+        expect(res.body.edibleThc).to.equal(100);
         done();
       });
     });
