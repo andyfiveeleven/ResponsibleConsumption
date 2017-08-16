@@ -10,8 +10,9 @@ const debug = require('debug')('credibleEdibles:server');
 mongoose.Promise = require('bluebird');
 
 const errors = require('./lib/error-middleware.js');
-const signup = require('./route/signup-route');
-const signin = require('./route/signin-route');
+// const signup = require('./route/signup-route');
+// const signin = require('./route/signin-route');
+const authRoute = require('./route/auth-route.js');
 const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
@@ -28,8 +29,9 @@ app.use(morgan('dev'));
 
 
 app.use(profile);
-app.use(signup);
-app.use(signin);
+// app.use(signup);
+// app.use(signin);
+app.use(authRoute);
 app.use(expReview);
 app.use(edibleRouter);
 app.use(errors);
