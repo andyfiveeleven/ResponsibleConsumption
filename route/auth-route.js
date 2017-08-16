@@ -44,3 +44,32 @@ authRouter.get('/api/signin', basicAuth, function(req, res, next){
   .then((token) => res.json(token))
   .catch(next);
 });
+
+// authRouter.get('/api/allaccounts', basicAuth, function(req, res, next){
+//   debug('GET: /api/allaccounts');
+//
+//   let allUsers = [];
+//
+//   User.find()
+// });
+
+authRouter.put('/api/editaccount/:id', basicAuth, jsonParser, function(req, res, next){
+  debug('/api/editaccount/:id');
+
+  User.findById(req.params.id, function(err, account){
+    if(err) return next(err);
+    console.log(account);
+    account.update(req.body);
+    return account;
+  })
+  .then((token) => res.json(token))
+  .catch(next);
+});
+
+authRouter.delete('/api/deleteaccount/:id', basicAuth, function(req, res, next){
+  debug('/api/deleteaccount/:id');
+
+  User.deleteOne(req.params.id)
+  .then((token) => res.json(token))
+  .catch(next);
+});
