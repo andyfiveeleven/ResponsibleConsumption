@@ -11,7 +11,7 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 const edibleRouter = module.exports = new Router();
 
 
-edibleRouter.post('/api/edible',bearerAuth, jsonParser, function(req, res, next){
+edibleRouter.post('/api/edible', bearerAuth, jsonParser, function(req, res, next){
   debug('POST: /api/edible');
   new Edible(req.body).save()
   .then( edible => res.json(edible))

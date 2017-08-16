@@ -18,15 +18,6 @@ const exampleUser = {
   email: 'exampleuser@test.com'
 };
 
-// const exampleProfile = {
-//   firstname: 'example',
-//   lastname: 'user',
-//   productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
-//   weight: 2,
-//   lastMeal: 5,
-//   experience: 3
-// };
-
 const testEdible = {
   name: 'testName',
   ucpc: '0000',
