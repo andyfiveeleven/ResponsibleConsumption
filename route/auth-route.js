@@ -11,7 +11,7 @@ const User = require('../model/user.js');
 
 const authRouter = module.exports = Router();
 
-authRouter.post('/api/signup', jsonParser, function (req, res, next) {
+authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   debug('POST: /api/signup');
 
   let password = req.body.password;
@@ -29,7 +29,7 @@ authRouter.post('/api/signup', jsonParser, function (req, res, next) {
   .catch(next);
 });
 
-authRouter.get('/api/signin', basicAuth, function(req, res, next){
+authRouter.get('/api/signin', basicAuth, (req, res, next) => {
   debug('GET: /api/signin');
 
   User.findOne({username: req.auth.username})
@@ -45,28 +45,26 @@ authRouter.get('/api/signin', basicAuth, function(req, res, next){
   .catch(next);
 });
 
-// authRouter.get('/api/allaccounts', basicAuth, function(req, res, next){
-//   debug('GET: /api/allaccounts');
-//
-//   let allUsers = [];
-//
-//   User.find()
-// });
+authRouter.get('/api/allaccounts', (req, res, next) => {
+  debug('GET: /api/allaccounts');
+  console.log('here');
+  User.find({})
+  .then((all) => {
+    console.log(all);
+    res.json(all);
+  })
+  .catch(next);
+});
 
-authRouter.put('/api/editaccount/:id', basicAuth, jsonParser, function(req, res, next){
+authRouter.put('/api/editaccount/:id', basicAuth, jsonParser, (req, res, next) => {
   debug('/api/editaccount/:id');
 
-  User.findById(req.params.id, function(err, account){
-    if(err) return next(err);
-    console.log(account);
-    account.update(req.body);
-    return account;
-  })
+  User.findOneAndUpdate(req.params.id, req.body, {new: true})
   .then((token) => res.json(token))
   .catch(next);
 });
 
-authRouter.delete('/api/deleteaccount/:id', basicAuth, function(req, res, next){
+authRouter.delete('/api/deleteaccount/:id', basicAuth, (req, res, next) => {
   debug('/api/deleteaccount/:id');
 
   User.deleteOne(req.params.id)

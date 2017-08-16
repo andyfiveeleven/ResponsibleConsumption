@@ -14,138 +14,296 @@ const exampleUser = {
   email: 'exampleuser@test.com'
 };
 
+const newUser = {
+  username: 'newuser',
+  password: '4321',
+  email: 'newuser@test.com'
+};
+
 describe('Auth Routes', () => {
-  describe('invalid paths', () => {
-    describe('POST: with invalid route', () => {
-      it('should return status: 404, msg: Not Found', (done) => {
-        request.post(`${url}/api/signup/not/a/path`)
-        .send(exampleUser)
-        .end((err) => {
-          expect(err.status).to.equal(404);
-          expect(err.message).to.equal('Not Found');
-          done();
-        });
-      });
-    });
+  // describe('invalid paths', () => {
+  //   describe('POST: with invalid route', () => {
+  //     it('should return status: 404, msg: Not Found', (done) => {
+  //       request.post(`${url}/api/signup/not/a/path`)
+  //       .send(exampleUser)
+  //       .end((err) => {
+  //         expect(err.status).to.equal(404);
+  //         expect(err.message).to.equal('Not Found');
+  //         done();
+  //       });
+  //     });
+  //   });
+  //
+  //   describe('GET: with invalid route', () => {
+  //     it('should return status: 404, msg: Not Found', (done) => {
+  //       request.get(`${url}/api/signin/not/a/path`)
+  //       .auth(exampleUser.username, exampleUser.password)
+  //       .end((err) => {
+  //         expect(err.status).to.equal(404);
+  //         expect(err.message).to.equal('Not Found');
+  //         done();
+  //       });
+  //     });
+  //   });
+  // });
+  //
+  // describe('POST: /api/signup', () => {
+  //   afterEach((done) => {
+  //     User.remove({})
+  //       .then(() => done())
+  //       .catch(done);
+  //   });
+  //   describe('with valid body', () => {
+  //     it('should return a status of 200 and a token', (done) => {
+  //       request.post(`${url}/api/signup`)
+  //       .send(exampleUser)
+  //       .end((err, res) => {
+  //         if(err) return done(err);
+  //         expect(res.status).to.equal(200);
+  //         expect(res.text).to.be.a('string');
+  //         expect(res.body.username).to.equal(exampleUser.username);
+  //         expect(res.body.email).to.equal(exampleUser.email);
+  //         done();
+  //       });
+  //     });
+  //   });
+  //
+  //   describe('with invalid body', () => {
+  //     it('should return an error status of 400', (done) => {
+  //       request.post(`${url}/api/signup`)
+  //       .send()
+  //       .end((err, res) => {
+  //         console.log(res.text);
+  //         console.log(res.body);
+  //         expect(err.status).to.equal(400);
+  //         done();
+  //       });
+  //     });
+  //   });
+  // });
+  //
+  //
+  // describe('GET: /api/signin', function(){
+  //   afterEach((done) => {
+  //     User.remove({})
+  //       .then(() => done())
+  //       .catch(done);
+  //   });
+  //   beforeEach((done) => {
+  //     let user = new User(exampleUser);
+  //     user.generatePasswordHash(exampleUser.password)
+  //     .then((user) => user.save())
+  //     .then((user) => {
+  //       this.tempUser = user;
+  //       done();
+  //     })
+  //     .catch(done);
+  //   });
+  //
+  //   describe('with valid body', () => {
+  //     it('should return a status of 200 and a token', (done) => {
+  //       request.get(`${url}/api/signin`)
+  //       .auth(exampleUser.username, exampleUser.password)
+  //       .end((err, res) => {
+  //         if(err) return done(err);
+  //         console.log(res.body);
+  //         expect(res.status).to.equal(200);
+  //         expect(res.body).to.be.a('object');
+  //         expect(res.body.username).to.equal(this.tempUser.username);
+  //         expect(res.body.email).to.equal(this.tempUser.email);
+  //         done();
+  //       });
+  //     });
+  //   });
+  //
+  //   describe('cannot be authenticated', () => {
+  //     it('should return status: 401, msg: username required', (done) => {
+  //       request.get(`${url}/api/signin`)
+  //       .auth('', exampleUser.password)
+  //       .end((err, res) => {
+  //         expect(err.status).to.equal(401);
+  //         expect(res.text).to.equal('username required');
+  //         done();
+  //       });
+  //     });
+  //     it('should return status: 401, msg: password required', (done) => {
+  //       request.get(`${url}/api/signin`)
+  //       .auth(exampleUser.username, '')
+  //       .end((err, res) => {
+  //         expect(err.status).to.equal(401);
+  //         expect(res.text).to.equal('password required');
+  //         done();
+  //       });
+  //     });
+  //     it('should return status: 401, msg: unauthorized', (done) => {
+  //       request.get(`${url}/api/signin`)
+  //       .auth(exampleUser.username, 'bad password')
+  //       .end((err, res) => {
+  //         expect(err.status).to.equal(401);
+  //         expect(res.text).to.equal('unauthorized');
+  //         done();
+  //       });
+  //     });
+  //     it('should return status: 401, msg: invalid username', (done) => {
+  //       request.get(`${url}/api/signin`)
+  //       .auth('bad username', exampleUser.password)
+  //       .end((err, res) => {
+  //         expect(err.status).to.equal(401);
+  //         expect(res.text).to.equal('invalid username');
+  //         done();
+  //       });
+  //     });
+  //   });
+  // });
 
-    describe('GET: with invalid route', () => {
-      it('should return status: 404, msg: Not Found', (done) => {
-        request.get(`${url}/api/signin/not/a/path`)
-        .auth(exampleUser.username, exampleUser.password)
-        .end((err) => {
-          expect(err.status).to.equal(404);
-          expect(err.message).to.equal('Not Found');
-          done();
-        });
-      });
-    });
-  });
+  // User.remove({});
+  describe('GET: /api/allaccounts', function(){
+    // afterEach((done) => {
+    //   User.remove({})
+    //     .then(() => done())
+    //     .catch(done);
+    // });
+    // beforeEach((done) => {
+    //   let userOne = new User(exampleUser);
+    //   userOne.generatePasswordHash(exampleUser.password)
+    //   .then((user) => user.save())
+    //   .then((user) => {
+    //     this.tempUser = user;
+    //     console.log(this.tempUser);
+    //   })
+    //   .then(() => {
+    //     let userTwo = new User(newUser);
+    //     userTwo.generatePasswordHash(newUser.password)
+    //     .then((user) => user.save())
+    //     .then((user) => {
+    //       this.tempUserTwo = user;
+    //       console.log(this.tempUserTwo);
+    //       done();
+    //     });
+    //   })
+    //   .catch(done);
+    // });
 
-  describe('POST: /api/signup', () => {
-    afterEach((done) => {
-      User.remove({})
-        .then(() => done())
+    describe('with valid input', () => {
+      after((done) => {
+        User.remove({})
+          .then(() => done())
+          .catch(done);
+      });
+      before((done) => {
+        console.log('here');
+        new User(exampleUser)
+        .save()
+        .then((userOne) => {
+          console.log(userOne);
+          this.tempUserOne = userOne;
+          console.log(this.tempUserOne);
+          done();
+        })
         .catch(done);
-    });
-    describe('with valid body', () => {
-      it('should return a status of 200 and a token', (done) => {
-        request.post(`${url}/api/signup`)
-        .send(exampleUser)
+      });
+      before((done) => {
+        console.log('here');
+        new User(newUser)
+        .save()
+        .then((userTwo) => {
+          console.log(userTwo);
+          this.tempUserTwo = userTwo;
+          console.log(this.tempUserTwo);
+          done();
+        })
+        .catch(done);
+      });
+      it('should return an array of users', (done) => {
+        request.get(`${url}/api/allaccounts`)
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.text).to.be.a('string');
-          expect(res.body.username).to.equal(exampleUser.username);
-          expect(res.body.email).to.equal(exampleUser.email);
-          done();
-        });
-      });
-    });
-
-    describe('with invalid body', () => {
-      it('should return an error status of 400', (done) => {
-        request.post(`${url}/api/signup`)
-        .send()
-        .end((err, res) => {
-          expect(err.status).to.equal(400);
-          done();
-        });
-      });
-    });
-  });
-
-
-  describe('GET: /api/signin', () => {
-    afterEach((done) => {
-      User.remove({})
-        .then(() => done())
-        .catch(done);
-    });
-    beforeEach((done) => {
-      let user = new User(exampleUser);
-      user.generatePasswordHash(exampleUser.password)
-      .then((user) => user.save())
-      .then((user) => {
-        this.tempUser = user;
-        done();
-      })
-      .catch(done);
-    });
-    describe('with valid body', function() {
-      it('should return a status of 200 and a token', (done) => {
-        request.get(`${url}/api/signin`)
-        .auth(exampleUser.username, exampleUser.password)
-        .end((err, res) => {
-          if(err) return done(err);
           console.log(res.body);
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          expect(res.body.username).to.equal(exampleUser.username);
-          expect(res.body.email).to.equal(exampleUser.email);
-          done();
-        });
-      });
-    });
-
-    describe('cannot be authenticated', function() {
-      it('should return status: 401, msg: username required', (done) => {
-        request.get(`${url}/api/signin`)
-        .auth('', exampleUser.password)
-        .end((err, res) => {
-          expect(err.status).to.equal(401);
-          expect(res.text).to.equal('username required');
-          done();
-        });
-      });
-      it('should return status: 401, msg: password required', (done) => {
-        request.get(`${url}/api/signin`)
-        .auth(exampleUser.username, '')
-        .end((err, res) => {
-          expect(err.status).to.equal(401);
-          expect(res.text).to.equal('password required');
-          done();
-        });
-      });
-      it('should return status: 401, msg: unauthorized', (done) => {
-        request.get(`${url}/api/signin`)
-        .auth(exampleUser.username, 'bad password')
-        .end((err, res) => {
-          expect(err.status).to.equal(401);
-          expect(res.text).to.equal('unauthorized');
-          done();
-        });
-      });
-      it('should return status: 401, msg: invalid username', (done) => {
-        request.get(`${url}/api/signin`)
-        .auth('bad username', exampleUser.password)
-        .end((err, res) => {
-          expect(err.status).to.equal(401);
-          expect(res.text).to.equal('invalid username');
           done();
         });
       });
     });
   });
+
+//   describe('PUT: /api/editaccount/:id', function(){
+//     afterEach((done) => {
+//       User.remove({})
+//         .then(() => done())
+//         .catch(done);
+//     });
+//     beforeEach((done) => {
+//       let user = new User(exampleUser);
+//       user.generatePasswordHash(exampleUser.password)
+//       .then((user) => user.save())
+//       .then((user) => {
+//         this.tempUser = user;
+//         done();
+//       })
+//       .catch(done);
+//     });
+//
+//     describe('with valid id and body', () => {
+//       it('should return an updated token', (done) => {
+//         request.put(`${url}/api/editaccount/${this.tempUser._id}`)
+//         .send(newUser)
+//         .auth(exampleUser.username, exampleUser.password)
+//         .end((err, res) => {
+//           if(err) return done(err);
+//           expect(res.status).to.equal(200);
+//           expect(res.body.username).to.equal(newUser.username);
+//           expect(res.body.email).to.equal(newUser.email);
+//           done();
+//         });
+//       });
+//     });
+//
+//     describe('with invalid id and valid body', () => {
+//       it('should return status: 401, msg: invalid username', (done) => {
+//         request.put(`${url}/api/editaccount/badId`)
+//         .send(newUser)
+//         .auth(exampleUser.username, exampleUser.password)
+//         .end((err, res) => {
+//           expect(err.status).to.equal(404);
+//           console.log(res.text);
+//           console.log(res.body);
+//           console.log(err.message);
+//           done();
+//         });
+//       });
+//     });
+//   });
+//
+//
+//   describe('DELETE: /api/deleteaccount', () => {
+//     afterEach((done) => {
+//       User.remove({})
+//         .then(() => done())
+//         .catch(done);
+//     });
+//     beforeEach((done) => {
+//       let user = new User(exampleUser);
+//       user.generatePasswordHash(exampleUser.password)
+//       .then((user) => user.save())
+//       .then((user) => {
+//         this.tempUser = user;
+//         done();
+//       })
+//       .catch(done);
+//     });
+//
+//     describe('with valid id', () => {
+//       it('should delete a token', (done) => {
+//         request.delete(`${url}/api/deleteaccount/${this.tempUser._id}`)
+//         .auth(exampleUser.username, exampleUser.password)
+//         .end((err, res) => {
+//           if(err) return done(err);
+//           expect(res.status).to.equal(200);
+//           done();
+//         });
+//       });
+//     });
+//   });
 });
 
 
