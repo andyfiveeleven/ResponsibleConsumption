@@ -16,6 +16,7 @@ const expReviewSchema = Schema({
   reaction: {type: Number, default: 3}, //1-5
   edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
+  // edilbleID: { type: Schema.Types.ObjectId, required: true }
 });
 
 expReviewSchema.methods.findEdibleThc = function(){
