@@ -49,3 +49,11 @@ expReviewRouter.put('/api/expReview/:id', bearerAuth, jsonParser, function(req, 
   .then( expReview => res.json(expReview))
   .catch(next);
 });
+
+expReviewRouter.delete('/api/expReview/:id', bearerAuth, function(req, res, next){
+  debug('DELETE: /api/expReview/:id');
+
+  ExpReview.findByIdAndRemove(req.params.id)
+  .then( () => res.status(204).send())
+  .catch(next);
+});
