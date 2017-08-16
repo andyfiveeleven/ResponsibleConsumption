@@ -14,6 +14,7 @@ const expReviewSchema = Schema({
   dayDescription: {type: String, default: ''},
   reaction: {type: Number, default: 3}, //1-5
   profileID: { type: Schema.Types.ObjectId, required: true },
+  // edilbleID: { type: Schema.Types.ObjectId, required: true }
 });
 
 expReviewSchema.methods.generateDose = function(){
