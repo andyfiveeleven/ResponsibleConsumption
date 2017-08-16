@@ -23,10 +23,10 @@ expReviewSchema.methods.findEdibleThc = function(){
 
   return new Promise((resolve, reject) =>{
     Edible.findOne({'name': this.edibleName})
-    .then(thc => {
-      let thcStr = thc.thc;
+    .then( edible => {
+      let thcStr = edible.thc;
       thcStr = thcStr.slice(0, thcStr.length - 2);
-      let thcInt = parseInt(thcStr)
+      let thcInt = parseInt(thcStr);
       console.log(thcStr);
       this.edibleThc = thcInt;
       this.save();
