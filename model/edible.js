@@ -10,8 +10,8 @@ const edibleSchema = Schema ({
   link: {type: String},
   qr: {type: String},
   barcode: {type: String},
-  url: {type: String, unique: true},
-  image: {type: String, unique: true},
+  url: {type: String},
+  image: {type: String},
   producer: {
     name: {type: String},
     ucpc: {type: String},
