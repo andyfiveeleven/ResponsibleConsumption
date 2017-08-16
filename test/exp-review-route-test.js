@@ -159,4 +159,41 @@ describe('expReview Routes', function(){
       });
     });
   });
+
+  describe('GET: /api/expReview/:id', () => {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => user.save())
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
+      .then( profile => {
+        this.tempProfile = profile;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id.toString();
+      new expReview(exampleExpReview).save()
+      .then( expReview => {
+        this.tempExpReview = expReview;
+        done();
+      })
+      .catch(done);
+    });
+  });
 });
