@@ -16,6 +16,7 @@ expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res
 
   new ExpReview(req.body).save()
   .then( expReview => expReview.generateDose())
+  .then( expReview => expReview.findEdibleThc())
   .then( expReview => {
     res.json(expReview);
   })

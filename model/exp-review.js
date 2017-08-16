@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Edible = require('../model/edible.js');
 const debug = require('debug')('credibleEdibles:expReview');
 
 const Profile = require('../model/profile.js');
@@ -13,8 +14,23 @@ const expReviewSchema = Schema({
   date: {type: Date, required: true, default: Date.now },
   dayDescription: {type: String, default: ''},
   reaction: {type: Number, default: 3}, //1-5
+  edibleThc: {type: String},
   profileID: { type: Schema.Types.ObjectId, required: true },
 });
+
+expReviewSchema.methods.findEdibleThc = function(){
+  debug('Finding Edible Thc');
+
+  return new Promise((resolve, reject) =>{
+    Edible.findOne({'name': this.edibleName})
+    .then(thc => {
+      this.edibleThc = thc.thc;
+      this.save();
+    })
+    .then(() => resolve(this))
+    .catch((err) => reject(err));
+  });
+};
 
 expReviewSchema.methods.generateDose = function(){
   debug('generate dosage');
