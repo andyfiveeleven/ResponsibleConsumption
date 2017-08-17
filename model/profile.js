@@ -15,4 +15,4 @@ const profileSchema = Schema({
 
 
 debug('profileSchema');
-module.exports = mongoose.model('profile', profileSchema);
+module.exports = mongoose.model('profiles', profileSchema);

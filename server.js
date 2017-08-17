@@ -15,6 +15,7 @@ const authRoute = require('./route/auth-route.js');
 const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
+const commentRouter = require('./route/comment-route.js');
 
 dotenv.load();
 
@@ -30,6 +31,7 @@ app.use(profile);
 app.use(authRoute);
 app.use(expReview);
 app.use(edibleRouter);
+app.use(commentRouter);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
