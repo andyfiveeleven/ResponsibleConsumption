@@ -6,7 +6,7 @@ const createError = require('http-errors');
 const debug = require('debug')('credibleEdibles:exp-review-router');
 
 const Profile = require('../model/profile.js');
-const ExpReview = require('../model/exp-review.js')
+const ExpReview = require('../model/exp-review.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const expReviewRouter = module.exports = Router();
@@ -28,7 +28,7 @@ expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {
   console.log('hello');
 
   ExpReview.findById(req.params.id)
-  .populate('comments')
+  .populate('comment')
   .then( expReview => {
     res.json(expReview);
   })

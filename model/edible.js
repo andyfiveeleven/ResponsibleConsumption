@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Comment = require('../model/comment.js');
+const createError = require('http-errors');
 const debug = require('debug')('credibleEdibles:edibleSchema');
 
 const edibleSchema = Schema ({
@@ -28,7 +30,28 @@ const edibleSchema = Schema ({
     count: {type: Number},
     link: {type: String}
   },
+  comments: [{type: Schema.Types.ObjectId, ref: 'comment'}],
   createdDate: {type: Date, Default: new Date() }
 });
 
-module.exports = mongoose.model('edibles', edibleSchema);
+const Edible = module.exports = mongoose.model('edibles', edibleSchema);
+
+Edible.findByIdAndAddComment = function(id, comment){
+  debug('findByIdAndAddComment');
+
+  return Edible.findById(id)
+  .catch( err => Promise.reject(createError(404, err.message)))
+  .then( edible => {
+    comment.edibleID = edible._id;
+    this.tempEdible = edible;
+    return new Comment(comment).save();
+  })
+  .then( comment => {
+    this.tempEdible.comments.push(comment._id);
+    this.tempComment = comment;
+    return this.tempEdible.save();
+  })
+  .then( () => {
+    return this.tempComment;
+  });
+};
