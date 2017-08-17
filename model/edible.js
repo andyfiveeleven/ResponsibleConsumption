@@ -28,7 +28,8 @@ const edibleSchema = Schema ({
     count: {type: Number},
     link: {type: String}
   },
-  createdDate: {type: Date, Default: new Date() }
+  createdDate: {type: Date, Default: new Date()}
 });
 
+debug('edibleSchema');
 module.exports = mongoose.model('edible', edibleSchema);

@@ -63,7 +63,6 @@ authRouter.put('/api/editaccount/:id', basicAuth, jsonParser, (req, res, next) =
   User.findById(req.params.id)
   .then((user) => {
     if(!user) return Promise.reject(createError(404, 'not found'));
-    return user.comparePasswordHash(req.auth.password);
   })
   .then(() => {
     User.findOneAndUpdate(req.params.id, req.body, {new: true})
@@ -78,7 +77,6 @@ authRouter.delete('/api/deleteaccount/:id', basicAuth, (req, res, next) => {
   User.findById(req.params.id)
   .then((user) => {
     if(!user) return Promise.reject(createError(404, 'not found'));
-    return user.comparePasswordHash(req.auth.password);
   })
   .then(() => {
     User.deleteOne(req.params.id)
