@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const debug = require('debug')('credibleEdibles:product');
+const debug = require('debug')('credibleEdibles:edibleSchema');
 
 const edibleSchema = Schema ({
   name: {type: String, required: true, unique: true},
@@ -10,8 +10,8 @@ const edibleSchema = Schema ({
   link: {type: String},
   qr: {type: String},
   barcode: {type: String},
-  url: {type: String, unique: true},
-  image: {type: String, unique: true},
+  url: {type: String},
+  image: {type: String},
   producer: {
     name: {type: String},
     ucpc: {type: String},
