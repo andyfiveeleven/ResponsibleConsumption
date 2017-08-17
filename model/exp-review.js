@@ -51,4 +51,4 @@ expReviewSchema.methods.generateDose = function(){
 };
 
 debug('expReviewSchema');
-module.exports = mongoose.model('expReview', expReviewSchema);
+module.exports = mongoose.model('expReviews', expReviewSchema);

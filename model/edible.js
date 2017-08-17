@@ -31,4 +31,4 @@ const edibleSchema = Schema ({
   createdDate: {type: Date, Default: new Date() }
 });
 
-module.exports = mongoose.model('edible', edibleSchema);
+module.exports = mongoose.model('edibles', edibleSchema);

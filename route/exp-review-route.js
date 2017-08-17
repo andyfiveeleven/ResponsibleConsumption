@@ -23,10 +23,12 @@ expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res
   .catch(next);
 });
 
-expReviewRouter.get('api/expReview/:id', bearerAuth, function(req, res, next) {
+expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/expReview/:id');
+  console.log('hello');
 
   ExpReview.findById(req.params.id)
+  .populate('comments')
   .then( expReview => {
     res.json(expReview);
   })
