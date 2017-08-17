@@ -242,13 +242,18 @@ describe('expReview Routes', function(){
     });
 
     it('GET should return a expReview 200', done => {
+      console.log('temp profile id', this.tempProfile._id);
       request.get(`${url}/api/expReview/${this.tempProfile._id}`)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end( (err, res) => {
         if(err) return done(err);
+        console.log('res body!', res);
         expect(res.status).to.equal(200);
+        expect(res.body.edibleName).to.equal(exampleExpReview.edibleName);
+        expect(res.body.lastMeal).to.equal(2);
+        expect(res.body.dosage).to.equal(exampleExpReview.dosage);
         done();
       });
     });

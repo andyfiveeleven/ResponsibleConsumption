@@ -28,7 +28,8 @@ expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {
 
   ExpReview.findById(req.params.id)
   .then( expReview => {
-    res.json(expReview);
+    console.log('res returned', res.json(expReview));
+    return res.json(expReview);
   })
   .catch(next);
 });
