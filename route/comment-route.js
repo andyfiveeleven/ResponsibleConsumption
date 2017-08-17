@@ -22,11 +22,20 @@ commentRouter.post('/api/edible/:edibleID/comment', bearerAuth, jsonParser, func
 
 commentRouter.get('/api/comment/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/comment/:id');
-  console.log('hello');
 
   Comment.findById(req.params.id)
   .then( comment => {
     res.json(comment);
+  })
+  .catch(next);
+});
+
+commentRouter.put('/api/comment/:id', bearerAuth, jsonParser, function(req, res, next) {
+  debug(' PUT: /api/expReview/:id');
+
+  Comment.findByIdAndUpdate(req.params.id, req.body, {new:true})
+  .then( comment => {
+    return res.json(comment);
   })
   .catch(next);
 });
