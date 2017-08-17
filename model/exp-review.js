@@ -13,7 +13,7 @@ const expReviewSchema = Schema({
   dosage: {type: Number, default: 0},
   date: {type: Date, required: true, default: Date.now },
   dayDescription: {type: String, default: ''},
-  reaction: {type: Number, default: 3}, //1-5
+  reaction: {type: Number, default: 3},
   edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
 });
