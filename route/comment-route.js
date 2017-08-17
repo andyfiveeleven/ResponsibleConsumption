@@ -26,7 +26,7 @@ commentRouter.get('/api/comment/:id', bearerAuth, function(req, res, next) {
   console.log('hello');
 
   Comment.findById(req.params.id)
-  .populate('expReview')
+  .populate('expReviews')
   .then( comment => {
     res.json(comment);
   })
