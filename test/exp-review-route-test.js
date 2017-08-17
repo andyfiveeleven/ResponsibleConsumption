@@ -120,9 +120,7 @@ describe('expReview Routes', function(){
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        console.log(res.body);
         if (err) return done(err);
-        console.log(res.body);
         expect(res.status).to.equal(200);
         expect(res.body.lastMeal).to.equal(2);
         expect(res.body.edibleThc).to.equal(100);
@@ -242,18 +240,15 @@ describe('expReview Routes', function(){
     });
 
     it('GET should return a expReview 200', done => {
-      console.log('temp profile id', this.tempProfile._id);
-      request.get(`${url}/api/expReview/${this.tempProfile._id}`)
+      request.get(`${url}/api/expReview/${this.tempExpReview._id}`)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end( (err, res) => {
         if(err) return done(err);
-        console.log('res body!', res);
         expect(res.status).to.equal(200);
         expect(res.body.edibleName).to.equal(exampleExpReview.edibleName);
         expect(res.body.lastMeal).to.equal(2);
-        expect(res.body.dosage).to.equal(exampleExpReview.dosage);
         done();
       });
     });
@@ -319,7 +314,6 @@ describe('expReview Routes', function(){
     });
 
     it('PUT Should respond with a 200 and updated object', done => {
-      console.log('got here to teh put request');
       request.put(`${url}/api/expReview/${this.tempExpReview._id}`)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -327,7 +321,6 @@ describe('expReview Routes', function(){
       .send(newExpReview)
       .end( (err, res) => {
         if(err) return done(err);
-        console.log('RESD BODY', res.body);
         expect(res.status).to.equal(200);
         expect(res.body.edibleName).to.equal('new edible');
         expect(res.body.lastMeal).to.equal(5);
