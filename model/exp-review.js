@@ -16,7 +16,6 @@ const expReviewSchema = Schema({
   reaction: {type: Number, default: 3}, //1-5
   edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
-  // edilbleID: { type: Schema.Types.ObjectId, required: true }
 });
 
 expReviewSchema.methods.findEdibleThc = function(){
@@ -28,7 +27,6 @@ expReviewSchema.methods.findEdibleThc = function(){
       let thcStr = edible.thc;
       thcStr = thcStr.slice(0, thcStr.length - 2);
       let thcInt = parseInt(thcStr);
-      console.log(thcStr);
       this.edibleThc = thcInt;
       this.save();
     })

@@ -5,7 +5,6 @@ const request = require('superagent');
 const Promise = require('bluebird');
 
 const User = require('../model/user.js');
-// const Profile = require('../model/profile.js');
 const Edible = require('../model/edible.js');
 
 const url = `http://localhost:${process.env.PORT}`;
@@ -79,7 +78,6 @@ describe('edible routes', function () {
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', res.body.strain);
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('testName');
