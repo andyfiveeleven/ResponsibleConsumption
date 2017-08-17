@@ -13,10 +13,10 @@ const expReviewSchema = Schema({
   dosage: {type: Number, default: 0},
   date: {type: Date, required: true, default: Date.now },
   dayDescription: {type: String, default: ''},
-  reaction: {type: Number, default: 3}, //1-5
+  reaction: {type: Number, max: 5, default: 3}, //1-5
   edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
-  // edilbleID: { type: Schema.Types.ObjectId, required: true }
+  comments: [{type: Schema.Types.ObjectId, ref: 'comment'}],
 });
 
 expReviewSchema.methods.findEdibleThc = function(){
