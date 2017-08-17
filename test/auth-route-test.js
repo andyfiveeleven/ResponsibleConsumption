@@ -19,7 +19,7 @@ const newUser = {
   password: '4321',
   email: 'newuser@test.com'
 };
-
+//
 describe('Auth Routes', () => {
   describe('invalid paths', () => {
     describe('POST: with invalid route', () => {
