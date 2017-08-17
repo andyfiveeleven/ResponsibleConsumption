@@ -5,7 +5,7 @@
 ## **Documentation:**
 ##### POST: /api/signup
     request: http localhost:8000/api/signup username=Logan password=123 email=absherlogan@gmail.com
-    ```javascript
+
     HTTP/1.1 200 OK
     Access-Control-Allow-Origin: *
     Connection: keep-alive
@@ -14,7 +14,7 @@
     Date: Thu, 17 Aug 2017 21:54:36 GMT
     ETag: W/"a7-PQ2L0lJgsT/VWrn+Yvg3GL9LMsA"
     X-Powered-By: Express
-
+    ```
     {
     "__v": 0,
     "_id": "5996109c8db59d55caff5209",
@@ -23,7 +23,7 @@
     "username": "Logan"
     }
      ```
-     
+
 ##### GET: /api/signin
     should fetch existing user
 
