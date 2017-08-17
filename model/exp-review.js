@@ -39,7 +39,6 @@ expReviewSchema.methods.findEdibleThc = function(){
 
 expReviewSchema.methods.generateDose = function(){
   debug('generate dosage');
-//TODO: talk about this with Ta's
   return new Promise((resolve,reject) => {//??
     Profile.findById(this.profileID)
     .then( profile => {

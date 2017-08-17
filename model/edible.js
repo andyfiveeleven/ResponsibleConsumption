@@ -55,3 +55,4 @@ Edible.findByIdAndAddComment = function(id, comment){
     return this.tempComment;
   });
 };
+

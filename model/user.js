@@ -16,7 +16,6 @@ const userSchema = Schema({
   password: { type: String, required: true },
   findHash: { type: String, unique: true }
 });
-//
 
 userSchema.methods.generatePasswordHash = function(password){
   debug('generatePasswordHash');

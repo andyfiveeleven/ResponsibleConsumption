@@ -10,7 +10,7 @@ const profileSchema = Schema({
   productHistory: {type: Array, required: true},
   weight: { type: Number, required: true},
   experience: {type: Number, required: true},
-  userID: { type: Schema.Types.ObjectId, required: true } //mongoose makes the object id
+  userID: { type: Schema.Types.ObjectId, required: true }
 });
 
 
