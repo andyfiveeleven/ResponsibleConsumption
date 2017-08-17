@@ -5,7 +5,7 @@
 ## **Documentation:**
 ##### POST: /api/signup
     request: http localhost:8000/api/signup username=Logan password=123 email=absherlogan@gmail.com
-    ```
+    ```javascript
     HTTP/1.1 200 OK
     Access-Control-Allow-Origin: *
     Connection: keep-alive
@@ -24,7 +24,6 @@
     }
      ```
      
-
 ##### GET: /api/signin
     should fetch existing user
 
