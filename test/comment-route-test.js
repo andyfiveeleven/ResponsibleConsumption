@@ -156,4 +156,81 @@ describe('comment Routes', function(){
       });
     });
   });
+  describe('GET: /api/expReview/:id', ()=> {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => user.save())
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
+      .then( profile => {
+        this.tempProfile = profile;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
+      request.post(`${url}/api/expReview`)
+      .send(exampleExpReview)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Comment(exampleComment).save()
+      .then( comment => {
+        this.tempComment = comment;
+        return Comment.findByIdAndAddExp(comment._id, exampleExpReview);
+      })
+      .then( expReview => {
+        this.tempExpReview = expReview;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should return a comment', done => {
+      request.get(`${url}/api/comment/${this.tempComment._id}`)
+      .send(exampleComment)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res.body);
+        expect(res.body.edibleName).to.equal('testName');
+        done();
+      });
+    });
+  });
 });

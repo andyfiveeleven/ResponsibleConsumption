@@ -16,6 +16,7 @@ const expReviewSchema = Schema({
   reaction: {type: Number, default: 3}, //1-5
   edibleThc: {type: Number},
   profileID: { type: Schema.Types.ObjectId, required: true },
+  comments: [{type: Schema.Types.ObjectId, ref: 'comment'}],
 });
 
 expReviewSchema.methods.findEdibleThc = function(){
@@ -51,4 +52,4 @@ expReviewSchema.methods.generateDose = function(){
 };
 
 debug('expReviewSchema');
-module.exports = mongoose.model('expReviews', expReviewSchema);
+module.exports = mongoose.model('expReview', expReviewSchema);

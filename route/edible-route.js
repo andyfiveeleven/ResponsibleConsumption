@@ -23,7 +23,7 @@ edibleRouter.get('/api/edible/:id', bearerAuth, function(req, res, next) {
   console.log('hello');
 
   Edible.findById(req.params.id)
-  .populate('comments')
+  .populate('comment')
   .then( expReview => {
     res.json(expReview);
   })

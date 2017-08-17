@@ -220,6 +220,7 @@
 //       })
 //       .end( (err, res) => {
 //         if(err) return done(err);
+//         console.log(res.body);
 //         expect(res.status).to.equal(200);
 //         done();
 //       });
