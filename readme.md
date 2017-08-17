@@ -5,24 +5,23 @@
 ## **Documentation:**
 ##### POST: /api/signup
     request: http localhost:8000/api/signup username=Logan password=123 email=absherlogan@gmail.com
-
-    HTTP/1.1 200 OK
-    Access-Control-Allow-Origin: *
-    Connection: keep-alive
-    Content-Length: 167
-    Content-Type: application/json; charset=utf-8
-    Date: Thu, 17 Aug 2017 21:54:36 GMT
-    ETag: W/"a7-PQ2L0lJgsT/VWrn+Yvg3GL9LMsA"
-    X-Powered-By: Express
-    ```
-    {
-    "__v": 0,
-    "_id": "5996109c8db59d55caff5209",
-    "email": "absherlogan@gmail.com",
-    "password": "$2a$10$qAYT1INuGmRl4QCBhJRZ7OaEauwASegbrBBS8KpPWZhzhzlGFnfcC",
-    "username": "Logan"
-    }
-     ```
+```
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 167
+Content-Type: application/json; charset=utf-8
+Date: Thu, 17 Aug 2017 21:54:36 GMT
+ETag: W/"a7-PQ2L0lJgsT/VWrn+Yvg3GL9LMsA"
+X-Powered-By: Express
+{
+"__v": 0,
+"_id": "5996109c8db59d55caff5209",
+"email": "absherlogan@gmail.com",
+"password": "$2a$10$qAYT1INuGmRl4QCBhJRZ7OaEauwASegbrBBS8KpPWZhzhzlGFnfcC",
+"username": "Logan"
+}
+ ```
 
 ##### GET: /api/signin
     should fetch existing user
