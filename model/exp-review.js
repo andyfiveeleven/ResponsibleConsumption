@@ -13,13 +13,11 @@ const expReviewSchema = Schema({
   date: {type: Date, required: true, default: Date.now },
   dayDescription: {type: String, default: ''},
   reaction: {type: Number, default: 3}, //1-5
-  profileID: { type: Schema.Types.ObjectId, required: true },
-  // edilbleID: { type: Schema.Types.ObjectId, required: true }
+  profileID: { type: Schema.Types.ObjectId, required: true }
 });
 
 expReviewSchema.methods.generateDose = function(){
   debug('generate dosage');
-//TODO: talk about this with Ta's
   return new Promise((resolve,reject) => {//??
     Profile.findById(this.profileID)
     .then( profile => {

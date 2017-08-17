@@ -3,14 +3,41 @@
 ##### This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
 
 ## **Documentation:**
-##### GET: /api/signin
-    should fetch existing user
-
 ##### POST: /api/signup
     should create new user obj
 
-##### POST: something
-    output
+##### GET: /api/signin
+    should fetch existing user
+
+##### PUT: /api/editaccount/:id
+    update an existing account
+
+##### DELETE: /api/deleteaccount/:id
+    removing an account
+
+
+##### POST: /api/edible
+    adds an edible
+
+
+##### POST: /api/expReview
+    adds a user comment
+
+##### GET: /api/expReview/:id
+    loads an existing comment
+
+##### PUT: /api/expReview/:id
+    updates an existing comment
+
+##### DELETE: /api/expReview/:id
+    removes a comment
+
+
+##### POST: /api/profile
+    creates a profile
+
+##### GET: /api/profile/:id
+    loads a profile
 
 
 ## **Development Plan:**
@@ -42,27 +69,38 @@
   * creating a /lib directory with bearer-auth-middleware.js and error-middleware.js
 
 #### **Friday (Aug 11)**
+###### setting up more packages
   * made /test and basic testing files
   * set up travis and heroku
   * created /route plus signin and signup routes
   * fixed package.json to work with npm scripts
 
 #### **Weekend (Aug 12 - 13)**
-##### Stuff
+###### sleep
 
 #### **Monday (Aug 14)**
-##### Stuff
-we finished monday! 
-
+###### creating and testing routes
+  * creating a /exp-review-routes and testing them
+  * creating a /profile-routes and testing them
+  * creating a /edible-route and tests to go with them
+  * creating a /fetch-user-route and more tests
 
 #### **Tuesday (Aug 15)**
-##### Stuff
+###### bug fixes
+  * fixed github isses
+  * fixed auth-route bugs
+  * built out more auth-routes
+  * built out more exp-review-routes
+  * got coveralls working
 
 #### **Wednesday (Aug 16)**
-##### Stuff
+###### polishing
+  * finished auth-routes
 
 #### **Thursday (Aug 17)**
-##### Stuff
+###### finishing and presentation practice
+  * finished exp-review-routes
 
 #### **Friday (Aug 18)**
-##### Stuff
+###### last minute practice and bug fixes
+  * things

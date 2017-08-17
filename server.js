@@ -15,7 +15,7 @@ const authRoute = require('./route/auth-route.js');
 const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
-const load = require('./lib/load.js');
+// const load = require('./lib/load.js');
 
 dotenv.load();
 
