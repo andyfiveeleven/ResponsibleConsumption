@@ -23,6 +23,7 @@
     "username": "Logan"
     }
      ```
+     
 
 ##### GET: /api/signin
     should fetch existing user
