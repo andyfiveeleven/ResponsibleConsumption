@@ -28,7 +28,6 @@ expReviewSchema.methods.findEdibleThc = function(){
       let thcStr = edible.thc;
       thcStr = thcStr.slice(0, thcStr.length - 2);
       let thcInt = parseInt(thcStr);
-      console.log(thcStr);
       this.edibleThc = thcInt;
       this.save();
     })

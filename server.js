@@ -17,7 +17,6 @@ const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
 const commentRouter = require('./route/comment-route.js');
 
-
 dotenv.load();
 
 const app = express();
