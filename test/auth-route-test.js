@@ -8,8 +8,18 @@ const User = require('../model/user.js');
 const url = `http://localhost:${process.env.PORT}`;
 require('../server.js');
 
-const exampleUser = {username: 'exampleuser', password: '1234', email: 'exampleuser@test.com'};
-const newUser = {username: 'newuser', password: '4321', email: 'newuser@test.com'};
+const exampleUser = {
+  username: 'exampleuser',
+  password: '1234',
+  email: 'exampleuser@test.com'
+};
+
+const newUser = {
+  username: 'newuser',
+  password: '4321',
+  email: 'newuser@test.com'
+};
+
 
 describe('Auth Routes', () => {
   describe('invalid paths', () => {

@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const debug = require('debug')('credibleEdibles:product');
+const debug = require('debug')('credibleEdibles:edibleSchema');
 
 const edibleSchema = Schema ({
   name: {type: String, required: true, unique: true},
