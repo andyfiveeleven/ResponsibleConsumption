@@ -31,7 +31,7 @@ app.use(profile);
 app.use(authRoute);
 app.use(expReview);
 app.use(edibleRouter);
-load.load(323);
+// load.load(323);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
