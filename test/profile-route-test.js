@@ -180,7 +180,6 @@ describe('profile routes', function () {
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
-          console.log(' get route', res.body);
           expect(res.status).to.equal(200);
           expect(res.body.name).to.equal(exampleProfile.name);
           expect(res.body.weight).to.be.a('number');
