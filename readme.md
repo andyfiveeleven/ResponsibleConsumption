@@ -1,5 +1,7 @@
 # **Responsible Consumption**
 
+[![Coverage Status](https://coveralls.io/repos/github/andyfiveeleven/ResponsibleConsumption/badge.svg?branch=staging)](https://coveralls.io/github/andyfiveeleven/ResponsibleConsumption?branch=staging)
+
 ##### This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
 
 ## **Documentation:**
