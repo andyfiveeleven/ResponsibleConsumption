@@ -1,5 +1,9 @@
 # **Responsible Consumption**
 
+[![Coverage Status](https://coveralls.io/repos/github/andyfiveeleven/ResponsibleConsumption/badge.svg?branch=staging)](https://coveralls.io/github/andyfiveeleven/ResponsibleConsumption?branch=staging)
+
+##### This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
+
 ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
 #
 ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Our algorithm allows users to enter their information, weight, experience with cannabis, food consumed, and their edible of choice, and receive a suggested dosage.
@@ -14,6 +18,7 @@
 #### Cannabis edibles typically take 45 minutes to 2 hours to fully metabolize in the human body, take this into account when consuming. Do not 'double down' on dosage or consume any more cannabis until you are certain it has been fully metabolized to ensure a quality experience.
 
 #### In no way is the suggested dose a medical diagnosis or prescription. This application is designed to give users a general idea of the dose they could use. Users should use caution when using cannabis in any form. Do not operate any motor vehicles or machinery under the influence of cannabis, no matter what the dosage.
+
 
 ## **Documentation:**
 
