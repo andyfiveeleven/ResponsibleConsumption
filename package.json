@@ -4,7 +4,7 @@
   "description": "desc",
   "main": "server.js",
   "scripts": {
-    "test": "say testing so dont you dare type test|DEBUG='credibleEdibles*' mocha",
+    "test": "say testing? come on down|DEBUG='credibleEdibles*' mocha",
     "start": "DEBUG='credibleEdibles*' node server.js",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
@@ -26,6 +26,7 @@
     "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
+    "player": "^0.6.1",
     "superagent": "^3.5.2"
   },
   "dependencies": {
