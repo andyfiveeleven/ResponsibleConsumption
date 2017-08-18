@@ -337,7 +337,7 @@ X-Powered-By: Express
 
 ##### GET: /api/profile/:id
 ```
-get route { _id: '59971675794e69481b889db6',
+{ _id: '59971675794e69481b889db6',
  firstname: 'example',
  lastname: 'user',
  weight: 2,
