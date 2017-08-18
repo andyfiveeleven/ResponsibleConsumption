@@ -133,24 +133,24 @@ X-Powered-By: Express
 ##### POST: /api/edible
 ```
 { __v: 0,
-name: 'testName',
-ucpc: '0000',
-link: 'www.alink.com',
-qr: 'www.qr.com',
-barcode: 'www.barcode.com',
-url: 'www.url.com',
-image: 'www.image.com',
-type: 'testType',
-labTest: true,
-thc: '100mg',
-cbd: '3mg',
-cannabis: true,
-hashOil: false,
-_id: '599629b68639344252018258',
-comments: [],
-reviews: { count: 0, link: 'www.somelink.com' },
-strain: [],
-producer: { name: 'producerName', ucpc: '0000', link: 'www.prolink.com' } }
+ name: 'testName',
+ ucpc: '0000',
+ link: 'www.alink.com',
+ qr: 'www.qr.com',
+ barcode: 'www.barcode.com',
+ url: 'www.url.com',
+ image: 'www.image.com',
+ type: 'testType',
+ labTest: true,
+ thc: '100mg',
+ cbd: '3mg',
+ cannabis: true,
+ hashOil: false,
+ _id: '599629b68639344252018258',
+ comments: [],
+ reviews: { count: 0, link: 'www.somelink.com' },
+ strain: [],
+ producer: { name: 'producerName', ucpc: '0000', link: 'www.prolink.com' } }
 ```
 
 ##### GET: /api/edible/:id
@@ -275,20 +275,74 @@ producer: { name: 'producerName', ucpc: '0000', link: 'www.prolink.com' } }
  ```
 
 ##### POST: /api/expReview
-    adds a user comment
+```
+{ edibleThc: 100,
+  __v: 0,
+  edibleName: 'testName',
+  lastMeal: 2,
+  profileID: '599670004bd7c26e1b539cab',
+  _id: '599670008db59d55caff5216',
+  comments: [],
+  reaction: 3,
+  dayDescription: '',
+  date: '2017-08-18T04:41:36.978Z',
+  dosage: 2 }
+```
 
 ##### GET: /api/expReview/:id
-    loads an existing comment
+```
+{ _id: '599670034bd7c26e1b539cb3',
+  edibleName: 'testName',
+  lastMeal: 2,
+  profileID: '599670024bd7c26e1b539cb2',
+  __v: 0,
+  comments: [],
+  reaction: 3,
+  dayDescription: '',
+  date: '2017-08-18T04:41:39.036Z',
+  dosage: 0 }
+```
 
 ##### PUT: /api/expReview/:id
-    updates an existing comment
+```
+{ _id: '599670044bd7c26e1b539cb6',
+  edibleName: 'new edible',
+  lastMeal: 5,
+  profileID: '599670034bd7c26e1b539cb5',
+  __v: 0,
+  comments: [],
+  reaction: 3,
+  dayDescription: '',
+  date: '2017-08-18T04:41:40.061Z',
+  dosage: 0 }
+```
 
 ##### DELETE: /api/expReview/:id
-    removes a comment
+```
+{}
+```
 
 
 ##### POST: /api/profile
-    creates a profile
+```
+{ __v: 0,
+  firstname: 'example',
+  lastname: 'user',
+  weight: 2,
+  experience: 3,
+  userID: '599671690af68c715b2389d7',
+  _id: '599671698db59d55caff5225',
+  productHistory: [ 'zootDrops', 'GoodShipSnickerdoodle' ] }
+```
 
 ##### GET: /api/profile/:id
-    loads a profile
+```
+get route { _id: '59971675794e69481b889db6',
+ firstname: 'example',
+ lastname: 'user',
+ weight: 2,
+ experience: 3,
+ userID: '59971675794e69481b889db5',
+ __v: 0,
+ productHistory: [ 'zootDrops', 'GoodShipSnickerdoodle' ] }
+ ```
