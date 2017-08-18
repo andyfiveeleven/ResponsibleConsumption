@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const debug = require('debug')('credibleEdibles:server');
+const Player = require('player');
 
 mongoose.Promise = require('bluebird');
 
@@ -34,5 +35,10 @@ app.use(expReview);
 app.use(edibleRouter);
 app.use(commentRouter);
 app.use(errors);
+
+//player
+
+var player = new Player('./assets/testing.mp3');
+player.play();
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));

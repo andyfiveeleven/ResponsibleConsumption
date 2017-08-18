@@ -26,6 +26,7 @@
     "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
+    "player": "^0.6.1",
     "superagent": "^3.5.2"
   },
   "dependencies": {
