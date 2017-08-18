@@ -5,7 +5,6 @@ const request = require('superagent');
 const Promise = require('bluebird');
 
 const User = require('../model/user.js');
-// const Profile = require('../model/profile.js');
 const Edible = require('../model/edible.js');
 
 const url = `http://localhost:${process.env.PORT}`;
@@ -44,6 +43,27 @@ const testEdible = {
   },
 };
 
+const exampleComment = {
+  edibleName: 'testName',
+  title: 'testTitle',
+  commentBody: 'it was good',
+  effectRelaxed: 1,
+  effectHappy: 1,
+  effectEuphoric: 1,
+  effectUplifted: 1,
+  effectCreative: 1,
+  medicalStress: 2,
+  medicalDepression: 2,
+  medicalPain: 2,
+  medicalHeadaches: 2,
+  medicalInsomnia: 2,
+  negativeDryMouth: 3,
+  negativeDryEyes: 3,
+  negativeParanoid: 3,
+  negativeDizzy: 3,
+  negativeAnxious: 3,
+};
+
 describe('edible routes', function () {
   afterEach( done => {
     Promise.all([
@@ -79,7 +99,6 @@ describe('edible routes', function () {
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', res.body.strain);
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('testName');
@@ -182,6 +201,49 @@ describe('edible routes', function () {
       .send()
       .end((err,res) => {
         expect(res.status).to.equal(404);
+        done();
+      });
+    });
+  });
+  describe('GET: /api/edible/:id', ()=> {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => {
+        return user.save();
+      })
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        return Edible.findByIdAndAddComment(edible._id, exampleComment);
+      })
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('GET should return an edible 200', done => {
+      request.get(`${url}/api/edible/${this.tempEdible._id}`)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .end( (err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
         done();
       });
     });

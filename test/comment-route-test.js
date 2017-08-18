@@ -1,16 +1,17 @@
-'use strict';
-
 const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
+
+
 const User = require('../model/user.js');
 const Profile = require('../model/profile.js');
 const ExpReview = require('../model/exp-review.js');
 const Edible = require('../model/edible.js');
+const Comment = require('../model/comment.js');
 
-require('../server.js');
 
 const url = `http://localhost:${process.env.PORT}`;
+require('../server.js');
 
 const exampleUser = {
   username: 'exampleuser',
@@ -23,7 +24,7 @@ const exampleProfile = {
   lastname: 'user',
   productHistory: ['zootDrops', 'GoodShipSnickerdoodle'],
   weight: 2,
-  experience: 2,
+  experience: 3,
 };
 
 const exampleExpReview = {
@@ -57,24 +58,62 @@ const testEdible = {
   },
 };
 
-const newExpReview = {
-  edibleName: 'new edible',
-  lastMeal: 5
+const exampleComment = {
+  edibleName: 'testName',
+  title: 'testTitle',
+  commentBody: 'it was good',
+  effectRelaxed: 1,
+  effectHappy: 1,
+  effectEuphoric: 1,
+  effectUplifted: 1,
+  effectCreative: 1,
+  medicalStress: 2,
+  medicalDepression: 2,
+  medicalPain: 2,
+  medicalHeadaches: 2,
+  medicalInsomnia: 2,
+  negativeDryMouth: 3,
+  negativeDryEyes: 3,
+  negativeParanoid: 3,
+  negativeDizzy: 3,
+  negativeAnxious: 3,
 };
 
-describe('expReview Routes', function(){
+const newComment = {
+  edibleName: 'newName',
+  title: 'newTitle',
+  commentBody: 'it was new',
+  effectRelaxed: 2,
+  effectHappy: 2,
+  effectEuphoric: 1,
+  effectUplifted: 1,
+  effectCreative: 1,
+  medicalStress: 2,
+  medicalDepression: 2,
+  medicalPain: 2,
+  medicalHeadaches: 2,
+  medicalInsomnia: 2,
+  negativeDryMouth: 3,
+  negativeDryEyes: 3,
+  negativeParanoid: 3,
+  negativeDizzy: 3,
+  negativeAnxious: 3,
+};
+
+describe('comment Routes', function(){
   afterEach( done => {
     Promise.all([
       User.remove({}),
       Profile.remove({}),
       ExpReview.remove({}),
+      Comment.remove({}),
       Edible.remove({ name: 'testName'})
     ])
     .then(() => done())
     .catch(done);
   });
 
-  describe('POST: /api/expReview', ()=> {
+  describe('POST: /api/edible/:edibleID/comment', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -110,25 +149,34 @@ describe('expReview Routes', function(){
       .catch(done);
     });
 
-    it('should return a expReview', done => {
+    before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
       request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should return a comment', done => {
+      request.post(`${url}/api/edible/${this.tempEdible._id}/comment`)
+      .send(exampleComment)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.equal(200);
-        expect(res.body.lastMeal).to.equal(2);
-        expect(res.body.edibleThc).to.equal(100);
-        expect(res.body.dosage).to.equal(2);
+        expect(res.body.edibleName).to.equal('testName');
         done();
       });
     });
   });
-
-  describe('POST with an invalid request', ()=> {
+  describe('GET: /api/expReview/:id', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -153,20 +201,55 @@ describe('expReview Routes', function(){
       })
       .catch(done);
     });
-    it('should return a 400', done => {
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
       request.post(`${url}/api/expReview`)
-      .send()
+      .send(exampleExpReview)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Comment(exampleComment).save()
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should return a comment', done => {
+      request.get(`${url}/api/comment/${this.tempComment._id}`)
+      .send(exampleComment)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        expect(res.status).to.equal(400);
+        if (err) return done(err);
+        expect(res.body.edibleName).to.equal('testName');
         done();
       });
     });
   });
-
-  describe('POST without a token 401', () => {
+  
+  describe('PUT /api/comment/:id', () =>{
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -191,91 +274,56 @@ describe('expReview Routes', function(){
       })
       .catch(done);
     });
-    it('should return a 401', done => {
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
       request.post(`${url}/api/expReview`)
-      .send()
-      .end((err, res) => {
-        expect(res.status).to.equal(401);
-        done();
-      });
-    });
-  });
-
-  describe('GET: /api/expReview/:id', () => {
-    before( done => {
-      new User(exampleUser)
-      .generatePasswordHash(exampleUser.password)
-      .then( user => user.save())
-      .then( user => {
-        this.tempUser = user;
-        return user.generateToken();
-      })
-      .then( token => {
-        this.tempToken = token;
-        done();
-      })
-      .catch(done);
-    });
-
-    before( done => {
-      exampleProfile.userID = this.tempUser._id;
-      new Profile(exampleProfile).save()
-      .then( profile => {
-        this.tempProfile = profile;
-        done();
-      })
-      .catch(done);
-    });
-
-    before( done => {
-      exampleExpReview.profileID = this.tempProfile._id.toString();
-      new ExpReview(exampleExpReview).save()
-      .then( expReview => {
-        this.tempExpReview = expReview;
-        done();
-      })
-      .catch(done);
-    });
-
-    it('GET should return a expReview 200', done => {
-      request.get(`${url}/api/expReview/${this.tempExpReview._id}`)
+      .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Comment(exampleComment).save()
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('PUT Should respond with a 200 and updated coment.', done => {
+      request.put(`${url}/api/comment/${this.tempComment._id}`)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .send(newComment)
       .end( (err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.edibleName).to.equal(exampleExpReview.edibleName);
-        expect(res.body.lastMeal).to.equal(2);
+        expect(res.body.name).to.equal(newComment.name);
         done();
       });
     });
-
-    describe('GET with an invalid request 404', () => {
-      it('should return a 404', done => {
-        request.get(`${url}/api.brewery/1234567890`)
-        .set({
-          Authorization: `Bearer ${this.tempToken}`
-        })
-        .end( (err, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
-      });
-    });
-
-    describe('GET with no token should be 401', () => {
-      it('should return 401', done => {
-        request.get(`${url}/api.brewery/1234567890`)
-        .end( (err, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
-      });
-    });
   });
-
-  describe('PUT /api/expReview/:id', ()=>{
+  
+  describe('DELETE: /api/expReview/:id', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -302,85 +350,39 @@ describe('expReview Routes', function(){
     });
 
     before( done => {
-      exampleExpReview.profileID = this.tempProfile._id.toString();
-      new ExpReview(exampleExpReview).save()
-      .then( expReview => {
-        this.tempExpReview = expReview;
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        return Edible.findByIdAndAddComment(this.tempEdible._id, exampleComment);
+      })
+      .then( comment => {
+        this.tempComment = comment;
         done();
       })
       .catch(done);
     });
 
-    it('PUT Should respond with a 200 and updated object', done => {
-      request.put(`${url}/api/expReview/${this.tempExpReview._id}`)
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
+      request.post(`${url}/api/expReview`)
+      .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
-      .send(newExpReview)
-      .end( (err, res) => {
-        if(err) return done(err);
-        expect(res.status).to.equal(200);
-        expect(res.body.edibleName).to.equal('new edible');
-        expect(res.body.lastMeal).to.equal(5);
-        done();
-      });
-    });
-
-    it('should respond with a 404', () => {
-      request.put(`${url}/api/expReview/123456789`)
-      .set({
-        Authorization: `Bearer ${this.tempToken}`
-      })
-      .send(newExpReview)
-      .end( (err,res) => {
-        expect(res.status).to.equal(404);
-      });
-    });
-  });
-
-  describe('DELETE: /api/expReview/:id', () => {
-    before( done => {
-      new User(exampleUser)
-      .generatePasswordHash(exampleUser.password)
-      .then( user => user.save())
-      .then( user => {
-        this.tempUser = user;
-        return user.generateToken();
-      })
-      .then( token => {
-        this.tempToken = token;
+      .then((res) => {
+        this.tempExpReview = res.body;
         done();
       })
       .catch(done);
     });
 
-    before( done => {
-      exampleProfile.userID = this.tempUser._id;
-      new Profile(exampleProfile).save()
-      .then( profile => {
-        this.tempProfile = profile;
-        done();
-      })
-      .catch(done);
-    });
-
-    before( done => {
-      exampleExpReview.profileID = this.tempProfile._id.toString();
-      new ExpReview(exampleExpReview).save()
-      .then( expReview => {
-        this.tempExpReview = expReview;
-        done();
-      })
-      .catch(done);
-    });
-
-    it('delete should delete a expReview and 204', done => {
-      request.delete(`${url}/api/expReview/${this.tempExpReview._id}`)
+    it('should delete a comment', done => {
+      request.delete(`${url}/api/comment/${this.tempComment._id}`)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
-        if(err) return done(err);
+        if (err) return done(err);
         expect(res.status).to.equal(204);
         done();
       });
