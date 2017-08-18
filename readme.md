@@ -1,5 +1,9 @@
 # **Responsible Consumption**
 
+[![Coverage Status](https://coveralls.io/repos/github/andyfiveeleven/ResponsibleConsumption/badge.svg?branch=staging)](https://coveralls.io/github/andyfiveeleven/ResponsibleConsumption?branch=staging)
+
+##### This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
+
 ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This web app is designed to help people with their recreational use of cannabis. Far too often people with little experience don't know how much to consume which will often lead to bad experiences.
 #
 ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Our algorithm allows users to enter their information, weight, experience with cannabis, food consumed, and their edible of choice, and receive a suggested dosage.
@@ -8,6 +12,7 @@
 #
 ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; In no way is the suggested dose a medical diagnosis or prescription. This application is designed to give users a general idea of the dose they could use. Users should use caution when using cannabis in any form. Do not operate any motor vehicles or machinery under the influence of cannabis, no matter what the dosage.
 #
+
 
 ## **Documentation:**
 ##### POST: /api/signup
