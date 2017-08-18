@@ -30,6 +30,16 @@ commentRouter.get('/api/comment/:id', bearerAuth, function(req, res, next) {
   .catch(next);
 });
 
+commentRouter.put('/api/comment/:id', bearerAuth, jsonParser, function(req, res, next) {
+  debug(' PUT: /api/expReview/:id');
+
+  Comment.findByIdAndUpdate(req.params.id, req.body, {new:true})
+  .then( comment => {
+    return res.json(comment);
+  })
+  .catch(next);
+});
+
 commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
   debug('DELETE: /api/comment/:id');
 
