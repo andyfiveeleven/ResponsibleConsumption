@@ -16,6 +16,7 @@ const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
 const commentRouter = require('./route/comment-route.js');
+const Player = require('player');
 
 
 dotenv.load();
@@ -27,6 +28,9 @@ mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 app.use(cors());
 app.use(morgan('dev'));
 
+var player = new Player('./assets/testing.mp3');
+
+player.play();
 
 app.use(profile);
 app.use(authRoute);
