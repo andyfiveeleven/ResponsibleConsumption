@@ -39,3 +39,14 @@ commentRouter.put('/api/comment/:id', bearerAuth, jsonParser, function(req, res,
   })
   .catch(next);
 });
+
+commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
+  debug('DELETE: /api/comment/:id');
+
+  Comment.findById(req.params.id)
+  .then((comment) => Edible.findByIdAndRemoveComment(comment.edibleID, req.params.id))
+  .then(() => Comment.findByIdAndRemove(req.params.id))
+  .then(() => res.status(204).send())
+  .catch(next);
+});
+

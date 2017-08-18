@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
-const mongoose = require('mongoose');
+
 
 const User = require('../model/user.js');
 const Profile = require('../model/profile.js');
@@ -248,7 +248,7 @@ describe('comment Routes', function(){
       });
     });
   });
-
+  
   describe('PUT /api/comment/:id', () =>{
     before( done => {
       new User(exampleUser)
@@ -318,6 +318,72 @@ describe('comment Routes', function(){
         if(err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal(newComment.name);
+        done();
+      });
+    });
+  });
+  
+  describe('DELETE: /api/expReview/:id', ()=> {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => user.save())
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
+      .then( profile => {
+        this.tempProfile = profile;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        return Edible.findByIdAndAddComment(this.tempEdible._id, exampleComment);
+      })
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
+      request.post(`${url}/api/expReview`)
+      .send(exampleExpReview)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('should delete a comment', done => {
+      request.delete(`${url}/api/comment/${this.tempComment._id}`)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(204);
         done();
       });
     });
