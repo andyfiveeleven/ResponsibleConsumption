@@ -69,7 +69,7 @@ Edible.findByIdAndRemoveComment = function(id, commentID) {
         return Edible.findByIdAndUpdate(Edible._id, {edible}, {new: true});
       }
     }
-  })
+  });
   // .then(edible => {return edible;});
 
 };

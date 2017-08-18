@@ -78,6 +78,27 @@ const exampleComment = {
   negativeAnxious: 3,
 };
 
+const newComment = {
+  edibleName: 'newName',
+  title: 'newTitle',
+  commentBody: 'it was new',
+  effectRelaxed: 2,
+  effectHappy: 2,
+  effectEuphoric: 1,
+  effectUplifted: 1,
+  effectCreative: 1,
+  medicalStress: 2,
+  medicalDepression: 2,
+  medicalPain: 2,
+  medicalHeadaches: 2,
+  medicalInsomnia: 2,
+  negativeDryMouth: 3,
+  negativeDryEyes: 3,
+  negativeParanoid: 3,
+  negativeDizzy: 3,
+  negativeAnxious: 3,
+};
+
 describe('comment Routes', function(){
   afterEach( done => {
     Promise.all([
@@ -222,6 +243,79 @@ describe('comment Routes', function(){
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body.edibleName).to.equal('testName');
+        done();
+      });
+    });
+  });
+  describe('PUT /api/comment/:id', () =>{
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => user.save())
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
+      .then( profile => {
+        this.tempProfile = profile;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleProfile.userID = this.tempUser._id;
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      exampleExpReview.profileID = this.tempProfile._id;
+      request.post(`${url}/api/expReview`)
+      .send(exampleExpReview)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .then((res) => {
+        this.tempExpReview = res.body;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Comment(exampleComment).save()
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('PUT Should respond with a 200 and updated coment.', done => {
+      request.put(`${url}/api/comment/${this.tempComment._id}`)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .send(newComment)
+      .end( (err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.name).to.equal(newComment.name);
         done();
       });
     });
