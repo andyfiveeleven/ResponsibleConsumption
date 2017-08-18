@@ -22,11 +22,20 @@ commentRouter.post('/api/edible/:edibleID/comment', bearerAuth, jsonParser, func
 
 commentRouter.get('/api/comment/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/comment/:id');
-  console.log('hello');
 
   Comment.findById(req.params.id)
   .then( comment => {
     res.json(comment);
   })
+  .catch(next);
+});
+
+commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
+  debug('DELETE: /api/comment/:id');
+
+  Comment.findById(req.params.id)
+  .then((comment) => Edible.findByIdAndRemoveComment(comment.edibleID, req.params.id))
+  .then(() => Comment.findByIdAndRemove(req.params.id))
+  .then(() => res.status(204).send())
   .catch(next);
 });

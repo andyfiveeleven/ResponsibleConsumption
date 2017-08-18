@@ -25,12 +25,10 @@ expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res
 
 expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/expReview/:id');
-  console.log('hello');
 
   ExpReview.findById(req.params.id)
   .populate('comment')
   .then( expReview => {
-    // console.log('res returned', res.json(expReview));
     return res.json(expReview);
   })
   .catch(next);
@@ -50,7 +48,6 @@ expReviewRouter.put('/api/expReview/:id', bearerAuth, jsonParser, function(req, 
   // }
   ExpReview.findByIdAndUpdate(req.params.id, req.body, {new: true})
   .then( expReview =>{
-    // console.log('PUT ROUTE', res.json(expReview));
     return res.json(expReview);
   })
   .catch(next);

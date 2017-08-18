@@ -3,9 +3,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Edible = require('../model/edible.js');
-const ExpReview = require('../model/exp-review.js');
 const debug = require('debug')('credibleEdibles:commentSchema');
-const createError = require('http-errors');
 
 const edibleCommentSchema = Schema ({
   edibleName: {type: String, required: true},

@@ -56,3 +56,20 @@ Edible.findByIdAndAddComment = function(id, comment){
   });
 };
 
+Edible.findByIdAndRemoveComment = function(id, commentID) {
+  debug('findByIdAndRemoveComment');
+
+  Edible.findById(id)
+  .then( edible => {
+    for(let i = 0; i < edible.comments.length; i++) {
+      if(commentID.toString() == edible.comments[i].toString()){
+        edible.comments = edible.comments.slice(i, -1);
+
+
+        return Edible.findByIdAndUpdate(Edible._id, {edible}, {new: true});
+      }
+    }
+  })
+  // .then(edible => {return edible;});
+
+};
