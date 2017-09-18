@@ -249,4 +249,49 @@ describe('edible routes', function () {
       });
     });
   });
+  describe('GET: /api/edible/search/:searchName', ()=> {
+    before( done => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then( user => {
+        return user.save();
+      })
+      .then( user => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then( token => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    before( done => {
+      new Edible(testEdible).save()
+      .then( edible => {
+        this.tempEdible = edible;
+        console.log(this.tempEdible);
+        return Edible.findByIdAndAddComment(edible._id, exampleComment);
+      })
+      .then( comment => {
+        this.tempComment = comment;
+        done();
+      })
+      .catch(done);
+    });
+
+    it('GET should return an edible 200', done => {
+      console.log('TEMPNAME',this.tempEdible.name);
+      request.get(`${url}/api/edible/search/${this.tempEdible.name}`)
+      .set({
+        Authorization: `Bearer ${this.tempToken}`
+      })
+      .end( (err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+  });
 });

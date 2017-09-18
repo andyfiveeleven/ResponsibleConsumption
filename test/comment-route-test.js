@@ -10,6 +10,7 @@ const Comment = require('../model/comment.js');
 
 
 const url = `http://localhost:${process.env.PORT}`;
+console.log(url);
 require('../server.js');
 
 const exampleUser = {

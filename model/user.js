@@ -14,7 +14,8 @@ const userSchema = Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  findHash: { type: String, unique: true }
+  findHash: { type: String, unique: true },
+  edibles: [{type: Schema.Types.ObjectId, ref: 'edible'}],
 });
 
 userSchema.methods.generatePasswordHash = function(password){
