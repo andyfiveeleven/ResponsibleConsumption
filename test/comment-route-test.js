@@ -164,8 +164,8 @@ describe('comment Routes', function(){
     });
 
     it('should return a comment', done => {
-      console.log(exampleComment);
-      request.post(`${url}/api/edible/${this.tempEdible._id}/comment`)
+      console.log(this.tempUser);
+      request.post(`${url}/api/edible/${this.tempEdible._id}/${this.tempUser._id}/comment`)
       .send(exampleComment)
       .set({
         Authorization: `Bearer ${this.tempToken}`
