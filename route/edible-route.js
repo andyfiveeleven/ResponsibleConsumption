@@ -37,7 +37,6 @@ edibleRouter.get('/api/edible/search/:searchByName', bearerAuth, function(req, r
   debug('GET: /api/edible/:searchByName');
 
   const regex = new RegExp(escapeRegex(req.params.searchByName), 'gi');
-  console.log('%%%%%%%%%%%%%%%%%%',regex);
 
   Edible.find({'name': regex})
   .then( edibles => res.json(edibles))

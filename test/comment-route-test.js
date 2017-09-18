@@ -62,21 +62,21 @@ const exampleComment = {
   edibleName: 'testName',
   title: 'testTitle',
   commentBody: 'it was good',
-  effectRelaxed: 1,
-  effectHappy: 1,
-  effectEuphoric: 1,
-  effectUplifted: 1,
-  effectCreative: 1,
-  medicalStress: 2,
-  medicalDepression: 2,
-  medicalPain: 2,
-  medicalHeadaches: 2,
-  medicalInsomnia: 2,
-  negativeDryMouth: 3,
-  negativeDryEyes: 3,
-  negativeParanoid: 3,
-  negativeDizzy: 3,
-  negativeAnxious: 3,
+  effectRelaxed: 5,
+  effectHappy: 5,
+  effectEuphoric: 5,
+  effectUplifted: 5,
+  effectCreative: 5,
+  medicalStress: 5,
+  medicalDepression: 5,
+  medicalPain: 5,
+  medicalHeadaches: 5,
+  medicalInsomnia: 5,
+  negativeDryMouth: 0,
+  negativeDryEyes: 0,
+  negativeParanoid: 0,
+  negativeDizzy: 0,
+  negativeAnxious: 0,
 };
 
 const newComment = {
@@ -164,12 +164,14 @@ describe('comment Routes', function(){
     });
 
     it('should return a comment', done => {
+      console.log(exampleComment);
       request.post(`${url}/api/edible/${this.tempEdible._id}/comment`)
       .send(exampleComment)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
+        console.log('%%%%%%%%%%%%%%COMMENT%%%%%%%%%%%%', res.body);
         if (err) return done(err);
         expect(res.body.edibleName).to.equal('testName');
         done();

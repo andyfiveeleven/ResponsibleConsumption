@@ -34,16 +34,20 @@ const edibleCommentSchema = Schema ({
   negativeAnxious: {type: Number, max: 5},
 });
 
-edibleCommentSchema.methods.generateOverAllRating = function(comment){
+const Comment = module.exports = mongoose.model('comment', edibleCommentSchema);
+
+Comment.generateOverAllRating = function(comment){
   debug('generate overAllRating');
   let effect = comment.effectCreative + comment.effectHappy + comment.effectUplifted + comment.effectEuphoric + comment.effectRelaxed;
   let medical = comment.medicalStress + comment.medicalDepression + comment.medicalPain + comment.medicalHeadaches + comment.medicalInsomnia;
   let negative = comment.negativeDryMouth + comment.negativeDryEyes + comment.negativeParanoid + comment.negativeDizzy + comment.negativeAnxious;
   comment.overAllRating = Math.floor((effect + medical - negative)/10)
+  console.log('NEWGENCOMMENT', comment);
+  return comment;
 };
 
 
-edibleCommentSchema.methods.findEdibleId = function(){
+Comment.findEdibleId = function(){
   debug('Finding Edible Id');
 
   return new Promise((resolve, reject) =>{
@@ -56,5 +60,3 @@ edibleCommentSchema.methods.findEdibleId = function(){
     .catch((err) => reject(err));
   });
 };
-
-module.exports = mongoose.model('comment', edibleCommentSchema);
