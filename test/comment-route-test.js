@@ -357,6 +357,7 @@ describe('comment Routes', function(){
       })
       .then( comment => {
         this.tempComment = comment;
+        User.findByIdAndAddComment(this.tempUser._id, this.tempComment);
         done();
       })
       .catch(done);

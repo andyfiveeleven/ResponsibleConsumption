@@ -86,3 +86,20 @@ User.findByIdAndAddComment = function(id, comment){
     return this.tempComment;
   });
 };
+
+User.findByIdAndRemoveComment = function(id, commentID) {
+  debug('findByIdAndRemoveComment');
+
+  User.findById(id)
+  .then( user => {
+    console.log(user);
+    for(let i = 0; i < user.comments.length; i++) {
+      if(commentID.toString() == user.comments[i].toString()){
+        user.comments = user.comments.slice(i, -1);
+
+
+        return User.findByIdAndUpdate(User._id, {user}, {new: true});
+      }
+    }
+  });
+};
