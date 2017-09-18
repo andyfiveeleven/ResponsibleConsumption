@@ -21,10 +21,7 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
 
   user.generatePasswordHash(password)
   .then((user) => user.save())
-  .then((user) => {
-    res.json(user);
-    user.generateToken();
-  })
+  .then((user) => user.generateToken())
   .then((token) => res.json(token))
   .catch(next);
 });
@@ -37,10 +34,7 @@ authRouter.get('/api/signin', basicAuth, (req, res, next) => {
     if(!user) return Promise.reject(createError(401, 'invalid username'));
     return user.comparePasswordHash(req.auth.password);
   })
-  .then((user) => {
-    res.json(user);
-    user.generateToken();
-  })
+  .then((user) => user.generateToken())
   .then((token) => res.json(token))
   .catch(next);
 });
