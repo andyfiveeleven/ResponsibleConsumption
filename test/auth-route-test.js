@@ -46,6 +46,32 @@ describe('Auth Routes', () => {
         });
       });
     });
+
+    // describe('server error', () => {
+    //   after((done) => {
+    //     User.remove({})
+    //       .then(() => done())
+    //       .catch(done);
+    //   });
+    //   before((done) => {
+    //     new User(exampleUser)
+    //     .generatePasswordHash(exampleUser.password)
+    //     .then((user) => {
+    //       user.save();
+    //       done();
+    //     })
+    //     .catch(done);
+    //   });
+    //   it('should return a 500 server error', (done) => {
+    //     request.post(`${url}/api/signup`)
+    //     .send(exampleUser)
+    //     .end((err) => {
+    //       expect(err.status).to.equal(500);
+    //       expect(err.message).to.equal('Internal Server Error');
+    //       done();
+    //     });
+    //   });
+    // });
   });
 
   describe('POST: /api/signup', () => {
@@ -75,6 +101,7 @@ describe('Auth Routes', () => {
         .send()
         .end((err) => {
           expect(err.status).to.equal(400);
+          expect(err.message).to.equal('Bad Request');
           done();
         });
       });
@@ -89,8 +116,8 @@ describe('Auth Routes', () => {
         .catch(done);
     });
     beforeEach((done) => {
-      let user = new User(exampleUser);
-      user.generatePasswordHash(exampleUser.password)
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
       .then((user) => user.save())
       .then((user) => {
         this.tempUser = user;
@@ -201,8 +228,8 @@ describe('Auth Routes', () => {
         .catch(done);
     });
     beforeEach((done) => {
-      let user = new User(exampleUser);
-      user.generatePasswordHash(exampleUser.password)
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
       .then((user) => user.save())
       .then((user) => {
         this.tempUser = user;
@@ -257,6 +284,7 @@ describe('Auth Routes', () => {
         .send(newUser)
         .end((err) => {
           expect(err.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
         });
       });
     });
@@ -268,6 +296,7 @@ describe('Auth Routes', () => {
         .auth(exampleUser.username, '')
         .end((err) => {
           expect(err.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
         });
       });
     });
@@ -281,8 +310,8 @@ describe('Auth Routes', () => {
         .catch(done);
     });
     beforeEach((done) => {
-      let user = new User(exampleUser);
-      user.generatePasswordHash(exampleUser.password)
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
       .then((user) => user.save())
       .then((user) => {
         this.tempUser = user;
@@ -298,6 +327,7 @@ describe('Auth Routes', () => {
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
+          expect(res.body.ok).to.equal(1);
           done();
         });
       });

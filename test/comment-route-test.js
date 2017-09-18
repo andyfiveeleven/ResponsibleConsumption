@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
 
+
 const User = require('../model/user.js');
 const Profile = require('../model/profile.js');
 const ExpReview = require('../model/exp-review.js');
@@ -250,6 +251,7 @@ describe('comment Routes', function(){
       });
     });
   });
+  
   describe('PUT /api/comment/:id', () =>{
     before( done => {
       new User(exampleUser)
@@ -323,6 +325,7 @@ describe('comment Routes', function(){
       });
     });
   });
+  
   describe('DELETE: /api/expReview/:id', ()=> {
     before( done => {
       new User(exampleUser)

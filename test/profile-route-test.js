@@ -1,8 +1,10 @@
+
 'use strict';
 
 const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
+
 const User = require('../model/user.js');
 const Profile = require('../model/profile.js');
 
@@ -143,6 +145,47 @@ describe('profile routes', function () {
       .end((err,res) => {
         expect(res.status).to.equal(404);
         done();
+      });
+    });
+  });
+
+  describe('GET: /api/profile/:id', ()=> {
+    beforeEach((done) => {
+      new User(exampleUser)
+      .generatePasswordHash(exampleUser.password)
+      .then((user) => user.save())
+      .then((user) => {
+        this.tempUser = user;
+        return user.generateToken();
+      })
+      .then((token) => {
+        this.tempToken = token;
+        done();
+      })
+      .catch(done);
+    });
+
+    beforeEach((done) => {
+      exampleProfile.userID = this.tempUser._id;
+      new Profile(exampleProfile).save()
+      .then((profile) => {
+        this.tempProfile = profile;
+        done();
+      })
+      .catch(done);
+    });
+    describe('with valid input', () => {
+      it('should get an existing profile', (done) => {
+        request.get(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.name).to.equal(exampleProfile.name);
+          expect(res.body.weight).to.be.a('number');
+          expect(res.body.weight).to.equal(2);
+          done();
+        });
       });
     });
   });

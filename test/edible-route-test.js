@@ -5,7 +5,6 @@ const request = require('superagent');
 const Promise = require('bluebird');
 
 const User = require('../model/user.js');
-// const Profile = require('../model/profile.js');
 const Edible = require('../model/edible.js');
 
 const url = `http://localhost:${process.env.PORT}`;
