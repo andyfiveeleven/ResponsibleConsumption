@@ -55,10 +55,7 @@ commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
     Edible.findByIdAndRemoveComment(comment.edibleID, req.params.id)
     return comment
   })
-  .then((comment) => {
-    console.log('____DELETE___COMMENT___USER____', comment);
-    return User.findByIdAndRemoveComment(comment.userid, req.params.id)
-  })
+  .then((comment) => User.findByIdAndRemoveComment(comment.userid, req.params.id))
   .then(() => Comment.findByIdAndRemove(req.params.id))
   .then(() => res.status(204).send())
   .catch(next);
