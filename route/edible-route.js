@@ -28,3 +28,17 @@ edibleRouter.get('/api/edible/:id', bearerAuth, function(req, res, next) {
   })
   .catch(next);
 });
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+edibleRouter.get('/api/edible/search/:searchByName', bearerAuth, function(req, res, next) {
+  debug('GET: /api/edible/:searchByName');
+
+  const regex = new RegExp(escapeRegex(req.params.searchByName), 'gi');
+
+  Edible.find({'name': regex})
+  .then( edibles => res.json(edibles))
+  .catch(next);
+});
