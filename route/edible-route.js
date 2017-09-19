@@ -33,7 +33,7 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-edibleRouter.get('/api/edible/search/:searchByName', bearerAuth, function(req, res, next) {
+edibleRouter.get('/api/edible/search/:searchByName', function(req, res, next) {
   debug('GET: /api/edible/:searchByName');
 
   const regex = new RegExp(escapeRegex(req.params.searchByName), 'gi');

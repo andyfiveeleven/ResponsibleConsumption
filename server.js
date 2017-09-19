@@ -34,7 +34,7 @@ app.use(authRoute);
 app.use(expReview);
 app.use(edibleRouter);
 app.use(commentRouter);
-// load.load(51);
+// load.load(1);
 app.use(errors);
 
 app.listen(PORT, () => debug(`app listening on: ${PORT}`));
