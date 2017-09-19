@@ -5,8 +5,9 @@ const request = require('superagent');
 
 const User = require('../model/user.js');
 
-const url = `http://localhost:${process.env.PORT}`;
 require('../server.js');
+
+const url = `http://localhost:${process.env.PORT}`;
 
 const exampleUser = {
   username: 'exampleuser',
@@ -80,20 +81,20 @@ describe('Auth Routes', () => {
         .then(() => done())
         .catch(done);
     });
-    // describe('with valid body', () => {
-    //   it('should return a status of 200 and a token', (done) => {
-    //     request.post(`${url}/api/signup`)
-    //     .send(exampleUser)
-    //     .end((err, res) => {
-    //       if(err) return done(err);
-    //       expect(res.status).to.equal(200);
-    //       expect(res.text).to.be.a('string');
-    //       expect(res.body.username).to.equal(exampleUser.username);
-    //       expect(res.body.email).to.equal(exampleUser.email);
-    //       done();
-    //     });
-    //   });
-    // });
+    describe('with valid body', () => {
+      it('should return a status of 200 and a token', (done) => {
+        request.post(`${url}/api/signup`)
+        .send(exampleUser)
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.text).to.be.a('string');
+          expect(res.body.username).to.equal(exampleUser.username);
+          expect(res.body.email).to.equal(exampleUser.email);
+          done();
+        });
+      });
+    });
 
     describe('with invalid body', () => {
       it('should return an error status of 400', (done) => {
@@ -126,20 +127,20 @@ describe('Auth Routes', () => {
       .catch(done);
     });
 
-    // describe('with valid body', () => {
-    //   it('should return a status of 200 and a token', (done) => {
-    //     request.get(`${url}/api/signin`)
-    //     .auth(exampleUser.username, exampleUser.password)
-    //     .end((err, res) => {
-    //       if(err) return done(err);
-    //       expect(res.status).to.equal(200);
-    //       expect(res.body).to.be.a('object');
-    //       expect(res.body.username).to.equal(this.tempUser.username);
-    //       expect(res.body.email).to.equal(this.tempUser.email);
-    //       done();
-    //     });
-    //   });
-    // });
+    describe('with valid body', () => {
+      it('should return a status of 200 and a token', (done) => {
+        request.get(`${url}/api/signin`)
+        .auth(exampleUser.username, exampleUser.password)
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body.username).to.equal(this.tempUser.username);
+          expect(res.body.email).to.equal(this.tempUser.email);
+          done();
+        });
+      });
+    });
 
     describe('cannot be authenticated', () => {
       it('should return status: 401, msg: username required', (done) => {
