@@ -112,7 +112,7 @@ describe('comment Routes', function(){
     .catch(done);
   });
 
-  describe('POST: /api/edible/:userID/:edibleID/comment', ()=> {
+  describe('POST: /api/edible/:edibleID/comment', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -150,7 +150,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -164,7 +164,7 @@ describe('comment Routes', function(){
 
     it('should return a comment', done => {
       console.log('WTF',this.tempUser._id);
-      request.post(`${url}/api/edible/${this.tempUser._id}/${this.tempEdible._id}/comment`)
+      request.post(`${url}/api/edible/${this.tempEdible._id}/comment`)
       .send(exampleComment)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -216,7 +216,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -288,7 +288,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -365,7 +365,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
