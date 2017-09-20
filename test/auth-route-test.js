@@ -38,7 +38,7 @@ describe('Auth Routes', () => {
 
     describe('GET: with invalid route', () => {
       it('should return status: 404, msg: Not Found', (done) => {
-        request.get(`${url}/api/signin/not/a/path`)
+        request.get(`${url}/api/login/not/a/path`)
         .auth(exampleUser.username, exampleUser.password)
         .end((err) => {
           expect(err.status).to.equal(404);
@@ -110,7 +110,7 @@ describe('Auth Routes', () => {
   });
 
 
-  describe('GET: /api/signin', function(){
+  describe('GET: /api/login', function(){
     afterEach((done) => {
       User.remove({})
         .then(() => done())
@@ -129,7 +129,7 @@ describe('Auth Routes', () => {
 
     describe('with valid body', () => {
       it('should return a status of 200 and a token', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, exampleUser.password)
         .end((err, res) => {
           if(err) return done(err);
@@ -144,7 +144,7 @@ describe('Auth Routes', () => {
 
     describe('cannot be authenticated', () => {
       it('should return status: 401, msg: username required', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth('', exampleUser.password)
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -153,7 +153,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: password required', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, '')
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -162,7 +162,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: unauthorized', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, 'bad password')
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -171,7 +171,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: invalid username', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth('bad username', exampleUser.password)
         .end((err, res) => {
           expect(err.status).to.equal(401);

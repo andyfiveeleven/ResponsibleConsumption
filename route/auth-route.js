@@ -55,6 +55,7 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   .then((user) => user.save())
   .then((user) => user.generateToken())
   .then((token) => {
+    console.log('TOKEN', token);
     res.cookie('Special-Cookie', token, {maxAge: 900000})
 
     res.send(token)
@@ -62,8 +63,8 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   .catch(next);
 });
 
-authRouter.get('/api/signin', basicAuth, (req, res, next) => {
-  debug('GET: /api/signin');
+authRouter.get('/api/login', basicAuth, (req, res, next) => {
+  debug('GET: /api/login');
 
   User.findOne({username: req.auth.username})
   .populate('comment', 'expReview')
@@ -74,8 +75,9 @@ authRouter.get('/api/signin', basicAuth, (req, res, next) => {
   .then((user) => {
     user.generateToken()
     .then((token) => {
-      user.findHash = token;
-      res.json(user);
+      let cookieOptions = {maxAge: 900000000}
+      res.cookie('Special-Cookie', token, cookieOptions)
+      res.send(token)
     });
   })
   .catch(next);

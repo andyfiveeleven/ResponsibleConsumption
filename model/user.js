@@ -143,3 +143,25 @@ User.findByIdAndRemoveExpReview = function(id, expReviewID) {
     }
   });
 };
+
+User.handleOAUTH = function(data) {
+  if (!data || !data.email) {
+    return Promise.reject(createError(400, 'VALIDATION ERROR - missing login info'));
+  }
+
+  return User.findOne({ email: data.email })
+  .then( user => {
+    console.log('%%%%%%%%%%%%%%%%%%', user);
+    if(!user) {
+      throw new Error('not found - create a user');
+    }
+    return user;
+  })
+  .catch(() => {
+    console.log('___DATA___', data);
+    return new User({
+      username: faker.internet.userName(),
+      email: data.email
+    }).save();
+  })
+}
