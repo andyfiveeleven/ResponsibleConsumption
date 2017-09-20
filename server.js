@@ -16,6 +16,7 @@ const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
 const commentRouter = require('./route/comment-route.js');
+const load = require('./lib/load');;
 
 
 dotenv.load();
@@ -24,7 +25,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGINS.split(' '),
+  credentials: true,
+}));
 app.use(morgan('dev'));
 
 
