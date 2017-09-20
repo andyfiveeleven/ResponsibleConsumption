@@ -70,48 +70,11 @@ const User = module.exports = mongoose.model('users', userSchema);
 User.findByIdAndAddComment = function(id, comment){
   debug('findByIdAndAddComment');
 
+  console.log('USERID', id);
   return User.findById(id)
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( user => {
-    comment.userid = user._id;
-    this.tempUser = user;
-    return comment.save()
-  })
-  .then( comment => {
-    this.tempUser.comments.push(comment._id);
-    this.tempComment = comment;
-    console.log('____TEMP_COMMENT____', this.tempComment);
-    console.log('____TEMP_USER____', this.tempUser);
-    return this.tempUser.save();
-  })
-  .then( () => {
-    return this.tempComment;
-  });
-};
-
-User.findByIdAndRemoveComment = function(id, commentID) {
-  debug('findByIdAndRemoveComment');
-
-  User.findById(id)
-  .then( user => {
-    console.log(user);
-    for(let i = 0; i < user.comments.length; i++) {
-      if(commentID.toString() == user.comments[i].toString()){
-        user.comments = user.comments.slice(i, -1);
-
-
-        return User.findByIdAndUpdate(User._id, {user}, {new: true});
-      }
-    }
-  });
-};
-
-User.findByIdAndAddComment = function(id, comment){
-  debug('findByIdAndAddComment');
-
-  return User.findById(id)
-  .catch( err => Promise.reject(createError(404, err.message)))
-  .then( user => {
+    console.log('USER', user);
     comment.userid = user._id;
     this.tempUser = user;
     return comment.save()
@@ -153,7 +116,7 @@ User.findByIdAndAddExpReview = function(id, expReview){
   .then( user => {
     expReview.userid = user._id;
     this.tempUser = user;
-    return expReview.save()
+    return new ExpReview(expReview).save()
   })
   .then( expReview => {
     this.tempUser.comments.push(expReview._id);
