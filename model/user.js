@@ -151,14 +151,14 @@ User.findByIdAndAddExpReview = function(id, expReview){
   return User.findById(id)
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( user => {
-    expReview.userID = user._id;
-    this.tempEdible = user;
-    return new ExpReview(expReview).save();
+    expReview.userid = user._id;
+    this.tempUser = user;
+    return expReview.save()
   })
   .then( expReview => {
-    this.tempEdible.comments.push(expReview._id);
+    this.tempUser.comments.push(expReview._id);
     this.tempExpReview = expReview;
-    return this.tempEdible.save();
+    return this.tempUser.save();
   })
   .then( () => {
     return this.tempExpReview;
@@ -170,9 +170,9 @@ User.findByIdAndRemoveExpReview = function(id, expReviewID) {
 
   User.findById(id)
   .then( user => {
-    for(let i = 0; i < user.comments.length; i++) {
-      if(commentID.toString() == user.comments[i].toString()){
-        user.comments = user.comments.slice(i, -1);
+    for(let i = 0; i < user.expReviews.length; i++) {
+      if(expReviewID.toString() == user.expReviews[i].toString()){
+        user.expReviews = user.expReviews.slice(i, -1);
 
 
         return User.findByIdAndUpdate(User._id, {user}, {new: true});

@@ -9,16 +9,23 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const expReviewRouter = module.exports = Router();
 
-expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res, next) {
-  debug('POST: /api/expReview');
+expReviewRouter.post('/api/user/:userID/expReview', bearerAuth, jsonParser, function(req, res, next) {
+  debug('POST: /api/user/:userID/expReview');
 
-  new ExpReview(req.body).save()
+  Edible.findByIdAndAddExpReview(req.params.userID, req.body)
+  .then( expReview => {
+    return expReview
+  })
   .then( expReview => expReview.generateDose())
   .then( expReview => expReview.findEdibleThc())
   .then( expReview => {
     res.json(expReview);
   })
   .catch(next);
+
+
+
+
 });
 
 expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {

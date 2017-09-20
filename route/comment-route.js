@@ -14,8 +14,11 @@ const commentRouter = module.exports = new Router();
 commentRouter.post('/api/edible/:edibleID/:userID/comment', bearerAuth, jsonParser, function(req, res, next) {
   debug('POST: /api/edible/:edibleID/comment');
   let commentRating = Comment.generateOverAllRating(req.body)
+
+  console.log('%%%%%%%%%%%%%%%', commentRating);
   Edible.findByIdAndAddComment(req.params.edibleID, commentRating)
   .then( comment => {
+    console.log('-____comment____-', comment);
     return comment
   })
   .then((comment) => {
@@ -60,4 +63,3 @@ commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
   .then(() => res.status(204).send())
   .catch(next);
 });
-

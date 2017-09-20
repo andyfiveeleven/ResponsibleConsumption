@@ -33,9 +33,8 @@ authRouter.get('/api/signin', basicAuth, (req, res, next) => {
   debug('GET: /api/signin');
 
   User.findOne({username: req.auth.username})
-  .populate('comments')
+  .populate('comment', 'expReview')
   .then((user) => {
-    console.log('____USER_POP____', user);
     if(!user) return Promise.reject(createError(401, 'invalid username'));
     return user.comparePasswordHash(req.auth.password);
   })
