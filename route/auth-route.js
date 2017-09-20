@@ -21,12 +21,10 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
 
   user.generatePasswordHash(password)
   .then((user) => user.save())
-  .then((user) => {
-    user.generateToken()
-    .then((token) => {
-      user.findHash = token;
-      res.json(user);
-    })
+  .then((user) => user.generateToken())
+  .then((token) => {
+    user.findHash = token;
+    res.json(user);
   })
   .catch(next);
 });
