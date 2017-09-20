@@ -81,10 +81,12 @@ describe('expReview Routes', function(){
       .then( user => user.save())
       .then( user => {
         this.tempUser = user;
+        console.log('FUCKING SHIT',this.tempUser);
         return user.generateToken();
       })
       .then( token => {
         this.tempToken = token;
+        console.log('FUCKING SHIT',this.tempToken);
         done();
       })
       .catch(done);

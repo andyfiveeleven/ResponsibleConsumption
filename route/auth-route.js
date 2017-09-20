@@ -55,10 +55,8 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   .then((user) => user.save())
   .then((user) => user.generateToken())
   .then((token) => {
-    console.log('TOKEN', token);
-    res.cookie('Special-Cookie', token, {maxAge: 900000})
-
-    res.send(token)
+    res.cookie('Special-Cookie', token)
+    res.json(token)
   })
   .catch(next);
 });
@@ -77,7 +75,7 @@ authRouter.get('/api/login', basicAuth, (req, res, next) => {
     .then((token) => {
       let cookieOptions = {maxAge: 900000000}
       res.cookie('Special-Cookie', token, cookieOptions)
-      res.send(token)
+      res.json(token)
     });
   })
   .catch(next);
