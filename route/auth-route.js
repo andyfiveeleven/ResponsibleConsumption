@@ -21,11 +21,11 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
 
   user.generatePasswordHash(password)
   .then((user) => user.save())
-  .then((user) => {
+  .then((user) => user.generateToken())
+  .then((token) => {
+    user.findHash = token;
     res.json(user);
-    user.generateToken();
   })
-  .then((token) => res.json(token))
   .catch(next);
 });
 
@@ -39,10 +39,12 @@ authRouter.get('/api/signin', basicAuth, (req, res, next) => {
     return user.comparePasswordHash(req.auth.password);
   })
   .then((user) => {
-    res.json(user);
-    user.generateToken();
+    user.generateToken()
+    .then((token) => {
+      user.findHash = token;
+      res.json(user);
+    });
   })
-  .then((token) => res.json(token))
   .catch(next);
 });
 

@@ -16,7 +16,6 @@ const profile = require('./route/profile-route.js');
 const expReview = require('./route/exp-review-route.js');
 const edibleRouter = require('./route/edible-route.js');
 const commentRouter = require('./route/comment-route.js');
-// const load = require('./lib/load.js');
 
 
 dotenv.load();

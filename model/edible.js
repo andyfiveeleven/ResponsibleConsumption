@@ -70,4 +70,6 @@ Edible.findByIdAndRemoveComment = function(id, commentID) {
       }
     }
   });
+  // .then(edible => {return edible;});
+
 };

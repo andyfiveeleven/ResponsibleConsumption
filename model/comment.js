@@ -13,41 +13,27 @@ const edibleCommentSchema = Schema ({
   commentBody: {type: String, required: true},
   datePosted: {type: Date, default: new Date()},
 
-  overAllRating: {type: Number, max: 5},
+  effectRelaxed: {type: Number, max: 10},
+  effectHappy: {type: Number, max: 10},
+  effectEuphoric: {type: Number, max: 10},
+  effectUplifted: {type: Number, max: 10},
+  effectCreative: {type: Number, max: 10},
 
-  effectRelaxed: {type: Number, max: 5},
-  effectHappy: {type: Number, max: 5},
-  effectEuphoric: {type: Number, max: 5},
-  effectUplifted: {type: Number, max: 5},
-  effectCreative: {type: Number, max: 5},
+  medicalStress: {type: Number, max: 10},
+  medicalDepression: {type: Number, max: 10},
+  medicalPain: {type: Number, max: 10},
+  medicalHeadaches: {type: Number, max: 10},
+  medicalInsomnia: {type: Number, max: 10},
 
-  medicalStress: {type: Number, max: 5},
-  medicalDepression: {type: Number, max: 5},
-  medicalPain: {type: Number, max: 5},
-  medicalHeadaches: {type: Number, max: 5},
-  medicalInsomnia: {type: Number, max: 5},
-
-  negativeDryMouth: {type: Number, max: 5},
-  negativeDryEyes: {type: Number, max: 5},
-  negativeParanoid: {type: Number, max: 5},
-  negativeDizzy: {type: Number, max: 5},
-  negativeAnxious: {type: Number, max: 5},
+  negativeDryMouth: {type: Number, max: 10},
+  negativeDryEyes: {type: Number, max: 10},
+  negativeParanoid: {type: Number, max: 10},
+  negativeDizzy: {type: Number, max: 10},
+  negativeAnxious: {type: Number, max: 10},
 });
 
-const Comment = module.exports = mongoose.model('comment', edibleCommentSchema);
 
-Comment.generateOverAllRating = function(comment){
-  debug('generate overAllRating');
-  let effect = comment.effectCreative + comment.effectHappy + comment.effectUplifted + comment.effectEuphoric + comment.effectRelaxed;
-  let medical = comment.medicalStress + comment.medicalDepression + comment.medicalPain + comment.medicalHeadaches + comment.medicalInsomnia;
-  let negative = comment.negativeDryMouth + comment.negativeDryEyes + comment.negativeParanoid + comment.negativeDizzy + comment.negativeAnxious;
-  comment.overAllRating = Math.floor((effect + medical - negative)/10)
-  console.log('NEWGENCOMMENT', comment);
-  return comment;
-};
-
-
-Comment.findEdibleId = function(){
+edibleCommentSchema.methods.findEdibleId = function(){
   debug('Finding Edible Id');
 
   return new Promise((resolve, reject) =>{
@@ -60,3 +46,5 @@ Comment.findEdibleId = function(){
     .catch((err) => reject(err));
   });
 };
+
+module.exports = mongoose.model('comment', edibleCommentSchema);

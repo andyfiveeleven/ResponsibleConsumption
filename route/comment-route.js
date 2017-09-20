@@ -5,13 +5,12 @@ const jsonParser = require('body-parser').json();
 const debug = require('debug')('credibleEdibles:comment-router');
 const Edible = require('../model/edible.js');
 const Comment = require('../model/comment.js');
-const User = require('../model/user.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const commentRouter = module.exports = new Router();
 
 
-commentRouter.post('/api/edible/:edibleID/:userID/comment', bearerAuth, jsonParser, function(req, res, next) {
+commentRouter.post('/api/edible/:edibleID/comment', bearerAuth, jsonParser, function(req, res, next) {
   debug('POST: /api/edible/:edibleID/comment');
   let commentRating = Comment.generateOverAllRating(req.body)
 
@@ -28,7 +27,8 @@ commentRouter.post('/api/edible/:edibleID/:userID/comment', bearerAuth, jsonPars
     })
     .catch(next);
   })
-})
+  .catch(next);
+});
 
 commentRouter.get('/api/comment/:id', bearerAuth, function(req, res, next) {
   debug('GET: /api/comment/:id');
@@ -54,11 +54,7 @@ commentRouter.delete('/api/comment/:id', bearerAuth, function(req, res, next) {
   debug('DELETE: /api/comment/:id');
 
   Comment.findById(req.params.id)
-  .then((comment) => {
-    Edible.findByIdAndRemoveComment(comment.edibleID, req.params.id)
-    return comment
-  })
-  .then((comment) => User.findByIdAndRemoveComment(comment.userid, req.params.id))
+  .then((comment) => Edible.findByIdAndRemoveComment(comment.edibleID, req.params.id))
   .then(() => Comment.findByIdAndRemove(req.params.id))
   .then(() => res.status(204).send())
   .catch(next);

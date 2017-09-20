@@ -10,7 +10,6 @@ const ExpReview = require('../model/exp-review.js');
 const Schema = mongoose.Schema;
 const debug = require('debug')('credibleEdibles:user');
 
-
 const userSchema = Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
@@ -65,6 +64,7 @@ userSchema.methods.generateToken = function(){
 };
 
 debug('userSchema');
+
 const User = module.exports = mongoose.model('users', userSchema);
 
 User.findByIdAndAddComment = function(id, comment){
