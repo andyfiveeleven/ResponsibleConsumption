@@ -2,7 +2,6 @@ const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
 
-
 const User = require('../model/user.js');
 const Profile = require('../model/profile.js');
 const ExpReview = require('../model/exp-review.js');
@@ -10,9 +9,8 @@ const Edible = require('../model/edible.js');
 const Comment = require('../model/comment.js');
 
 
-const url = `http://localhost:${process.env.PORT}`;
-
 require('../server.js');
+const url = `http://localhost:${process.env.PORT}`;
 
 const exampleUser = {
   username: 'exampleuser',
@@ -63,21 +61,21 @@ const exampleComment = {
   edibleName: 'testName',
   title: 'testTitle',
   commentBody: 'it was good',
-  effectRelaxed: 1,
-  effectHappy: 1,
-  effectEuphoric: 1,
-  effectUplifted: 1,
-  effectCreative: 1,
-  medicalStress: 2,
-  medicalDepression: 2,
-  medicalPain: 2,
-  medicalHeadaches: 2,
-  medicalInsomnia: 2,
-  negativeDryMouth: 3,
-  negativeDryEyes: 3,
-  negativeParanoid: 3,
-  negativeDizzy: 3,
-  negativeAnxious: 3,
+  effectRelaxed: 5,
+  effectHappy: 5,
+  effectEuphoric: 5,
+  effectUplifted: 5,
+  effectCreative: 5,
+  medicalStress: 5,
+  medicalDepression: 5,
+  medicalPain: 5,
+  medicalHeadaches: 5,
+  medicalInsomnia: 5,
+  negativeDryMouth: 0,
+  negativeDryEyes: 0,
+  negativeParanoid: 0,
+  negativeDizzy: 0,
+  negativeAnxious: 0,
 };
 
 const newComment = {
@@ -114,7 +112,7 @@ describe('comment Routes', function(){
     .catch(done);
   });
 
-  describe('POST: /api/edible/:edibleID/comment', ()=> {
+  describe('POST: /api/edible/:userID/:edibleID/comment', ()=> {
     before( done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
@@ -152,7 +150,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/expReview`)
+      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -165,12 +163,15 @@ describe('comment Routes', function(){
     });
 
     it('should return a comment', done => {
-      request.post(`${url}/api/edible/${this.tempEdible._id}/comment`)
+      console.log('WTF',this.tempUser._id);
+      request.post(`${url}/api/edible/${this.tempUser._id}/${this.tempEdible._id}/comment`)
       .send(exampleComment)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
+        if(err) return done(err);
+        console.log('%%%%%%HI%%%%%%%%COMMENT%%%%%%%HI%%%%%', res.body);
         if (err) return done(err);
         expect(res.body.edibleName).to.equal('testName');
         done();
@@ -215,7 +216,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/expReview`)
+      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -249,7 +250,6 @@ describe('comment Routes', function(){
       });
     });
   });
-
   describe('PUT /api/comment/:id', () =>{
     before( done => {
       new User(exampleUser)
@@ -288,7 +288,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/expReview`)
+      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -323,7 +323,6 @@ describe('comment Routes', function(){
       });
     });
   });
-
   describe('DELETE: /api/expReview/:id', ()=> {
     before( done => {
       new User(exampleUser)
@@ -358,6 +357,7 @@ describe('comment Routes', function(){
       })
       .then( comment => {
         this.tempComment = comment;
+        User.findByIdAndAddComment(this.tempUser._id, this.tempComment);
         done();
       })
       .catch(done);
@@ -365,7 +365,7 @@ describe('comment Routes', function(){
 
     before( done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/expReview`)
+      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
