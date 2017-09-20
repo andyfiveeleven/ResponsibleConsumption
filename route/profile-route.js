@@ -11,7 +11,7 @@ const profileRouter = module.exports = Router();
 
 profileRouter.post('/api/profile', bearerAuth, jsonParser, function(req, res, next) {
   debug('POST: /api/profile');
-  
+
   req.body.userID = req.user._id;
   new Profile(req.body).save()
   .then( profile => res.json(profile))
@@ -27,3 +27,13 @@ profileRouter.get('/api/profile/:id', bearerAuth, function(req, res, next) {
   })
   .catch(next);
 });
+
+profileRouter.get('/profile/me', bearerAuth, (req, res, next) => {
+  Profile.findOne({owner: req.user._id})
+  .then(profile => {
+    if(!profile)
+      return next(createError(404, 'NOT FOUND ERROR: profile not found'))
+    res.json(profile)
+  })
+  .catch(next)
+})

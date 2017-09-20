@@ -38,7 +38,7 @@ describe('Auth Routes', () => {
 
     describe('GET: with invalid route', () => {
       it('should return status: 404, msg: Not Found', (done) => {
-        request.get(`${url}/api/signin/not/a/path`)
+        request.get(`${url}/api/login/not/a/path`)
         .auth(exampleUser.username, exampleUser.password)
         .end((err) => {
           expect(err.status).to.equal(404);
@@ -86,11 +86,10 @@ describe('Auth Routes', () => {
         request.post(`${url}/api/signup`)
         .send(exampleUser)
         .end((err, res) => {
+          console.log('POST RES BODY', res.body);
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.text).to.be.a('string');
-          expect(res.body.username).to.equal(exampleUser.username);
-          expect(res.body.email).to.equal(exampleUser.email);
           done();
         });
       });
@@ -110,7 +109,7 @@ describe('Auth Routes', () => {
   });
 
 
-  describe('GET: /api/signin', function(){
+  describe('GET: /api/login', function(){
     afterEach((done) => {
       User.remove({})
         .then(() => done())
@@ -122,6 +121,7 @@ describe('Auth Routes', () => {
       .then((user) => user.save())
       .then((user) => {
         this.tempUser = user;
+        console.log('THEMP USER', this.tempUser);
         done();
       })
       .catch(done);
@@ -129,14 +129,13 @@ describe('Auth Routes', () => {
 
     describe('with valid body', () => {
       it('should return a status of 200 and a token', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, exampleUser.password)
         .end((err, res) => {
           if(err) return done(err);
+          console.log('%%%%%%RESBODY%%%%%', res.body);
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          expect(res.body.username).to.equal(this.tempUser.username);
-          expect(res.body.email).to.equal(this.tempUser.email);
+          expect(res.body).to.be.a('string');
           done();
         });
       });
@@ -144,7 +143,7 @@ describe('Auth Routes', () => {
 
     describe('cannot be authenticated', () => {
       it('should return status: 401, msg: username required', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth('', exampleUser.password)
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -153,7 +152,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: password required', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, '')
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -162,7 +161,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: unauthorized', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth(exampleUser.username, 'bad password')
         .end((err, res) => {
           expect(err.status).to.equal(401);
@@ -171,7 +170,7 @@ describe('Auth Routes', () => {
         });
       });
       it('should return status: 401, msg: invalid username', (done) => {
-        request.get(`${url}/api/signin`)
+        request.get(`${url}/api/login`)
         .auth('bad username', exampleUser.password)
         .end((err, res) => {
           expect(err.status).to.equal(401);

@@ -6,18 +6,18 @@ const debug = require('debug')('credibleEdibles:comment-router');
 const Edible = require('../model/edible.js');
 const Comment = require('../model/comment.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
+const User = require('../model/user.js');
 
 const commentRouter = module.exports = new Router();
 
 
-commentRouter.post('/api/edible/:edibleID/comment', bearerAuth, jsonParser, function(req, res, next) {
-  debug('POST: /api/edible/:edibleID/comment');
+commentRouter.post('/api/edible/:userID/:edibleID/comment', bearerAuth, jsonParser, function(req, res, next) {
+  debug('POST: /api/edible/:userID/:edibleID/comment');
   let commentRating = Comment.generateOverAllRating(req.body)
 
-  console.log('%%%%%%%%%%%%%%%', commentRating);
+
   Edible.findByIdAndAddComment(req.params.edibleID, commentRating)
   .then( comment => {
-    console.log('-____comment____-', comment);
     return comment
   })
   .then((comment) => {

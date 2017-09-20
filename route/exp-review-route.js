@@ -3,7 +3,7 @@
 const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
 const debug = require('debug')('credibleEdibles:exp-review-router');
-
+const User = require('../model/user.js');
 const ExpReview = require('../model/exp-review.js');
 const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
@@ -12,7 +12,9 @@ const expReviewRouter = module.exports = Router();
 expReviewRouter.post('/api/user/:userID/expReview', bearerAuth, jsonParser, function(req, res, next) {
   debug('POST: /api/user/:userID/expReview');
 
-  Edible.findByIdAndAddExpReview(req.params.userID, req.body)
+  console.log('*******************',req.body);
+
+  User.findByIdAndAddExpReview(req.params.userID, req.body)
   .then( expReview => {
     return expReview
   })
