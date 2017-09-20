@@ -9,12 +9,11 @@ const bearerAuth = require('../lib/bearer-auth-middleware.js');
 
 const expReviewRouter = module.exports = Router();
 
-expReviewRouter.post('/api/user/:userID/expReview', bearerAuth, jsonParser, function(req, res, next) {
-  debug('POST: /api/user/:userID/expReview');
+expReviewRouter.post('/api/expReview', bearerAuth, jsonParser, function(req, res, next) {
+  debug('POST: /api/expReview');
+  console.log('666666666666', req.user);
 
-  console.log('*******************',req.body);
-
-  User.findByIdAndAddExpReview(req.params.userID, req.body)
+  User.findByIdAndAddExpReview(req.user._id, req.body)
   .then( expReview => {
     return expReview
   })
@@ -24,10 +23,6 @@ expReviewRouter.post('/api/user/:userID/expReview', bearerAuth, jsonParser, func
     res.json(expReview);
   })
   .catch(next);
-
-
-
-
 });
 
 expReviewRouter.get('/api/expReview/:id', bearerAuth, function(req, res, next) {

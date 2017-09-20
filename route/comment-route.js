@@ -11,8 +11,8 @@ const User = require('../model/user.js');
 const commentRouter = module.exports = new Router();
 
 
-commentRouter.post('/api/edible/:userID/:edibleID/comment', bearerAuth, jsonParser, function(req, res, next) {
-  debug('POST: /api/edible/:userID/:edibleID/comment');
+commentRouter.post('/api/edible/:edibleID/comment', bearerAuth, jsonParser, function(req, res, next) {
+  debug('POST: /api/edible/:edibleID/comment');
   let commentRating = Comment.generateOverAllRating(req.body)
 
 
@@ -21,7 +21,7 @@ commentRouter.post('/api/edible/:userID/:edibleID/comment', bearerAuth, jsonPars
     return comment
   })
   .then((comment) => {
-    User.findByIdAndAddComment(req.params.userID, comment)
+    User.findByIdAndAddComment(req.user._id, comment)
     .then( comment => {
       res.json(comment);
     })

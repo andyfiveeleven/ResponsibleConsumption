@@ -74,19 +74,18 @@ describe('expReview Routes', function(){
     .catch(done);
   });
 
-  describe('POST: /api/user/:userID/expReview', ()=> {
+  describe('POST: /api/user/expReview', ()=> {
     before( done => {
+      User.remove({})
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
       .then( user => user.save())
       .then( user => {
         this.tempUser = user;
-        console.log('FUCKING SHIT',this.tempUser);
         return user.generateToken();
       })
       .then( token => {
         this.tempToken = token;
-        console.log('FUCKING SHIT',this.tempToken);
         done();
       })
       .catch(done);
@@ -114,7 +113,7 @@ describe('expReview Routes', function(){
 
     it('should return a expReview', done => {
       exampleExpReview.profileID = this.tempProfile._id;
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -156,7 +155,7 @@ describe('expReview Routes', function(){
       .catch(done);
     });
     it('should return a 400', done => {
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send()
       .set({
         Authorization: `Bearer ${this.tempToken}`
@@ -194,7 +193,7 @@ describe('expReview Routes', function(){
       .catch(done);
     });
     it('should return a 401', done => {
-      request.post(`${url}/api/user/${this.tempUser._id}/expReview`)
+      request.post(`${url}/api/expReview`)
       .send()
       .end((err, res) => {
         expect(res.status).to.equal(401);
