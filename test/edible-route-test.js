@@ -7,9 +7,9 @@ const Promise = require('bluebird');
 const User = require('../model/user.js');
 const Edible = require('../model/edible.js');
 
-const url = `http://localhost:${process.env.PORT}`;
 
 require('../server.js');
+const url = `http://localhost:${process.env.PORT}`;
 
 const exampleUser = {
   username: 'exampleuser',
@@ -99,6 +99,7 @@ describe('edible routes', function () {
         Authorization: `Bearer ${this.tempToken}`
       })
       .end((err, res) => {
+        console.log('hello',res.body);
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.name).to.equal('testName');

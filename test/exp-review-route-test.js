@@ -29,6 +29,7 @@ const exampleProfile = {
 const exampleExpReview = {
   edibleName: 'testName',
   lastMeal: 2,
+  description: 'good shit',
 };
 
 const testEdible = {
@@ -229,7 +230,7 @@ describe('expReview Routes', function(){
     });
 
     before( done => {
-      exampleExpReview.profileID = this.tempProfile._id.toString();
+      exampleExpReview.userID = this.tempUser._id.toString();
       new ExpReview(exampleExpReview).save()
       .then( expReview => {
         this.tempExpReview = expReview;
