@@ -114,16 +114,17 @@ User.findByIdAndAddExpReview = function(id, expReview){
   return User.findById(id)
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( user => {
-    expReview.userid = user._id;
+    expReview.userID = user._id;
     this.tempUser = user;
     return new ExpReview(expReview).save()
   })
   .then( expReview => {
-    this.tempUser.comments.push(expReview._id);
+    this.tempUser.expReviews.push(expReview._id);
     this.tempExpReview = expReview;
     return this.tempUser.save();
   })
-  .then( () => {
+  .then( (user) => {
+    console.log('USER', user);
     return this.tempExpReview;
   });
 };

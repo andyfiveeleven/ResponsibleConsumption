@@ -15,7 +15,7 @@ const expReviewSchema = Schema({
   dayDescription: {type: String, default: ''},
   reaction: {type: Number, max: 5, default: 3},
   edibleThc: {type: Number},
-  profileID: { type: Schema.Types.ObjectId, required: true },
+  userID: { type: Schema.Types.ObjectId, required: true },
   comments: [{type: Schema.Types.ObjectId, ref: 'comment'}],
 });
 
