@@ -12,7 +12,7 @@ const expReviewSchema = Schema({
   edibleName: {type: String, required: true},
   lastMeal: {type: Number, required: true},
   dosage: {type: Number, default: 0},
-  date: {type: Date, required: true, default: Date.now },
+  date: {type: Date, required: true, default: Date.now},
   description: {type: String, default: ''},
   reaction: {type: Number, max: 5, default: 3},
   edibleThc: {type: Number},
