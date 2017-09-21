@@ -41,6 +41,7 @@ expReviewSchema.methods.findEdibleThc = function(expReview){
   return Edible.findOne({name: this.edibleName})
   .catch( err => Promise.reject(createError(404, err.message)))
   .then( edible => {
+    if(!edible) return this
     let thcStr = edible.thc;
     thcStr = thcStr.slice(0, thcStr.length - 2);
     let thcInt = parseInt(thcStr);
