@@ -37,3 +37,10 @@ profileRouter.get('/profile/me', bearerAuth, (req, res, next) => {
   })
   .catch(next)
 })
+profileRouter.delete('/api/profile/:id', bearerAuth, function(req, res, next){
+  debug('DELETE: /api/profile/:id');
+
+  Profile.findByIdAndRemove(req.params.id)
+  .then( () => res.status(204).send())
+  .catch(next);
+});

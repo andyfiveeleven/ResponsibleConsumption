@@ -10,6 +10,7 @@ const profileSchema = Schema({
   productHistory: {type: Array, required: true},
   weight: { type: Number, required: true},
   experience: {type: Number, required: true},
+  avatar: {type: String, default: ''},
   userID: { type: Schema.Types.ObjectId, required: true }
 });
 
