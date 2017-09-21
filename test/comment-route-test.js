@@ -139,7 +139,6 @@ describe('comment Routes', function(){
     });
 
     before( done => {
-      exampleProfile.userID = this.tempUser._id;
       new Edible(testEdible).save()
       .then( edible => {
         this.tempEdible = edible;
@@ -149,13 +148,14 @@ describe('comment Routes', function(){
     });
 
     before( done => {
-      exampleExpReview.profileID = this.tempProfile._id;
+      exampleExpReview.userID = this.tempUser._id;
       request.post(`${url}/api/expReview`)
       .send(exampleExpReview)
       .set({
         Authorization: `Bearer ${this.tempToken}`
       })
       .then((res) => {
+        console.log('%%%%%%%%%%%%%%%%',res.body);
         this.tempExpReview = res.body;
         done();
       })

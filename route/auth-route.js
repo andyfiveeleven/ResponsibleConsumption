@@ -33,7 +33,7 @@ authRouter.get('/oauth/google/code', (req, res, next) => {
     })
     .then(user => user.tokenCreate())
     .then( token => {
-      res.cookie('X-Slugchat-Token', token);
+      res.cookie('Special-Cookie', token);
       res.redirect(process.env.CLIENT_URL);
     })
     .catch((error) => {
@@ -55,7 +55,7 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   .then((user) => user.save())
   .then((user) => user.generateToken())
   .then((token) => {
-    res.cookie('Special-Cookie', token)
+    res.cookie('Special-Cookie', token, {maxAge: 900000000})
     res.json(token)
   })
   .catch(next);
