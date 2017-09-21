@@ -12,41 +12,41 @@ const User = require('../model/user.js');
 
 const authRouter = module.exports = Router();
 
-authRouter.get('/oauth/google/code', (req, res, next) => {
-  if(!req.query.code){
-    res.redirect(process.env.CLIENT_URL);
-  }else{
-    console.log(req.body);
-    superagent.post('https://www.googleapis.com/oauth2/v4/token')
-    .type('form')
-    .send({
-      code: req.query.code,
-      grant_type: 'authorization_code',
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${process.env.API_URL}/oauth/google/code`
-    })
-    .then(response => {
-      console.log('POST: /v4/token, response.body');
-      return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
-      .set('authorization', `Bearer ${response.body.access_token}`)
-    })
-    .then(response => {
-      console.log('GET: people/me', response.body)
-      return User.handleOAUTH(response.body);
-    })
-    .then(user => user.tokenCreate())
-    .then(token => {
-      console.log('TOKEN', token)
-      res.cookie('X-Token', token);
-      res.redirect(process.env.CLIENT_URL);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.redirect(process.env.CLIENT_URL);
-    })
-  }
-})
+// authRouter.get('/oauth/google/code', (req, res, next) => {
+//   if(!req.query.code){
+//     res.redirect(process.env.CLIENT_URL);
+//   }else{
+//     console.log(req.body);
+//     superagent.post('https://www.googleapis.com/oauth2/v4/token')
+//     .type('form')
+//     .send({
+//       code: req.query.code,
+//       grant_type: 'authorization_code',
+//       client_id: process.env.GOOGLE_CLIENT_ID,
+//       client_secret: process.env.GOOGLE_CLIENT_SECRET,
+//       redirect_uri: `${process.env.API_URL}/oauth/google/code`
+//     })
+//     .then(response => {
+//       console.log('POST: /v4/token, response.body');
+//       return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+//       .set('authorization', `Bearer ${response.body.access_token}`)
+//     })
+//     .then(response => {
+//       console.log('GET: people/me', response.body)
+//       return User.handleOAUTH(response.body);
+//     })
+//     .then(user => user.tokenCreate())
+//     .then(token => {
+//       console.log('TOKEN', token)
+//       res.cookie('X-Token', token);
+//       res.redirect(process.env.CLIENT_URL);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.redirect(process.env.CLIENT_URL);
+//     })
+//   }
+// })
 
 authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   debug('POST: /api/signup');
