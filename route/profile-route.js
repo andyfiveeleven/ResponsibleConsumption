@@ -28,8 +28,17 @@ profileRouter.get('/api/profile/:id', bearerAuth, function(req, res, next) {
   .catch(next);
 });
 
+profileRouter.get('/api/profile/userID', bearerAuth, function(req, res, next){
+  debug('GET /api/profile/userID')
+  Profile.findOne({ userID: req.user._id})
+  .then( profile => {
+    res.json(profile);
+  })
+  .catch(next)
+})
+
 profileRouter.get('/profile/me', bearerAuth, (req, res, next) => {
-  Profile.findOne({owner: req.user._id})
+  Profile.findOne({_id: req.user._id})
   .then(profile => {
     if(!profile)
       return next(createError(404, 'NOT FOUND ERROR: profile not found'))
