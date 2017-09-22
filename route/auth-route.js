@@ -56,7 +56,6 @@ authRouter.post('/api/signup', jsonParser, (req, res, next) => {
   .then((user) => user.generateToken())
   .then((token) => {
     res.cookie('Special-Cookie', token, {maxAge: 900000000})
-    res.json(token)
   })
   .catch(next);
 });
